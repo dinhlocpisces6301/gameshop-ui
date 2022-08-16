@@ -1,0 +1,41 @@
+.wrapper {
+  position: absolute;
+  z-index: 2;
+}
+
+.navbar {
+  background-color: var(--header-background-color);
+  width: 24rem;
+  box-shadow: 0 0 8px #000000;
+}
+
+.storenav {
+  background-color: var(--storenav-bg-color);
+  width: auto;
+  min-width: var(--storenav-min-width);
+  box-shadow: 0 0 8px #000000;
+}
+
+.search {
+  height: 200px;
+}
+
+.subnav {
+  display: flex;
+  flex-direction: column;
+}
+
+.subnav-item {
+  a {
+    font-size: 1.4rem;
+    line-height: 5rem;
+  }
+}
+
+.actionMenu {
+  background-color: var(--header-background-color);
+  width: 200px;
+  top: 80px;
+  right: 400px;
+  box-shadow: 0 0 12px #000000;
+}
