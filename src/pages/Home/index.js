@@ -1,8 +1,8 @@
 // import images from '~/assets/images';
 
-import Slider from '~/layouts/components/Slider';
-import StoreNav from '~/layouts/components/StoreNav';
-import ProductList from '~/layouts/components/ProductList';
+import Slider from '~/pages/components/Slider';
+import StoreNav from '~/pages/components/StoreNav';
+import ProductList from '~/pages/components/ProductList';
 
 function Home() {
   return (

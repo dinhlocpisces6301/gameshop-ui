@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 
 import styles from './StoreNav.module.scss';
-import Search from '~/layouts/components/Search';
+import Search from '~/pages/components/Search';
 import Dropdown from '~/components/Dropdown';
 import { storeNavItems } from './StoreNavItems.js';
 

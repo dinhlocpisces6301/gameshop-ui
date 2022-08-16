@@ -1,4 +1,4 @@
-import StoreNav from '~/layouts/components/StoreNav';
+import StoreNav from '~/pages/components/StoreNav';
 
 function Product() {
   return (

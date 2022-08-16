@@ -15,7 +15,7 @@ import { useClickOutside } from '~/hooks';
 const cx = classNames.bind(styles);
 
 function Header() {
-  const currentUser = true;
+  const currentUser = false;
   const [storeDropdown, setStoreDropdown] = useState(false);
   const [communityDropdown, setCommunityDropdown] = useState(false);
   const [actionDropdown, setActionState] = useState(false);
@@ -105,12 +105,12 @@ function Header() {
           ) : (
             <>
               <div className={cx('action-menu')}>
-                <Button primary href="/" className={cx('action-menu-button')}>
+                <Button primary href={config.routes.login} className={cx('action-menu-button')}>
                   Login
                 </Button>
               </div>
               <div className={cx('action-menu')}>
-                <Button text href="/" className={cx('action-menu-button')}>
+                <Button text href={config.routes.signup} className={cx('action-menu-button')}>
                   Register
                 </Button>
               </div>
