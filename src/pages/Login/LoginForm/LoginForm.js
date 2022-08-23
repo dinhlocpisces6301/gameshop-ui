@@ -1,6 +1,8 @@
 import classNames from 'classnames/bind';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
+
+import ToastPortal from '~/components/ToastPortal';
 import config from '~/config';
 import styles from './LoginForm.module.scss';
 
@@ -9,6 +11,15 @@ const cx = classNames.bind(styles);
 function LoginForm() {
   const [usernameInput, setUsernameInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
+
+  const toastRef = useRef();
+  const addToast = (mode, message) => {
+    toastRef.current.addMessage({ mode: mode, message: message });
+  };
+
+  const handleClick = () => {
+    addToast('success', 'Username or Password has been wrong!');
+  };
 
   return (
     <>
@@ -39,12 +50,15 @@ function LoginForm() {
               }}
             />
           </>
-          <button className={cx('button')}>Login</button>
+          <button className={cx('button')} onClick={handleClick}>
+            Login
+          </button>
           <Link to={config.routes.forgetPassword} className={cx('link')}>
             Forgot your Password?
           </Link>
         </div>
       </div>
+      <ToastPortal ref={toastRef} autoClose={true} />
     </>
   );
 }

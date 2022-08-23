@@ -5,6 +5,8 @@ import StoreNav from '~/pages/components/StoreNav';
 import ProductList from '~/pages/components/ProductList';
 
 function Home() {
+  document.title = 'STEM - Game Shop';
+
   return (
     <>
       <StoreNav />

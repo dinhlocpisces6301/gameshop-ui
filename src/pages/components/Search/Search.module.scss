@@ -64,7 +64,8 @@
 .header {
   height: 3rem;
   background-color: #575860;
-  margin-left: 0.8rem;
+  padding-left: 0.8rem;
+  z-index: 3;
 
   p {
     color: var(--white);

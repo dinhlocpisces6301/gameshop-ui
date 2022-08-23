@@ -2,9 +2,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { useState, useRef } from 'react';
 import classNames from 'classnames/bind';
-import styles from './Header.module.scss';
 import { Link } from 'react-router-dom';
 
+import styles from './Header.module.scss';
 import config from '~/config';
 import images from '~/assets/images';
 import Button from '~/components/Button';
@@ -15,7 +15,7 @@ import { useClickOutside } from '~/hooks';
 const cx = classNames.bind(styles);
 
 function Header() {
-  const currentUser = false;
+  const currentUser = true;
   const [storeDropdown, setStoreDropdown] = useState(false);
   const [communityDropdown, setCommunityDropdown] = useState(false);
   const [actionDropdown, setActionState] = useState(false);

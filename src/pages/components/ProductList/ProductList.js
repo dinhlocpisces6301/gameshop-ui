@@ -86,7 +86,6 @@ function ProductList() {
     setValue(products);
   }, []);
 
-  console.log(reviewValue.name);
   return (
     <div className={cx('wrapper')}>
       <div className={cx('header')}>

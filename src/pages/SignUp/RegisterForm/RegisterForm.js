@@ -1,6 +1,8 @@
 import classNames from 'classnames/bind';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
+
+import ToastPortal from '~/components/ToastPortal';
 import config from '~/config';
 import styles from './RegisterForm.module.scss';
 
@@ -11,6 +13,15 @@ function RegisterForm() {
   const [passwordInput, setPasswordInput] = useState('');
   const [rePasswordInput, setRePasswordInput] = useState('');
   const [emailInput, setEmailInput] = useState('');
+
+  const toastRef = useRef();
+  const addToast = (mode, message) => {
+    toastRef.current.addMessage({ mode: mode, message: message });
+  };
+
+  const handleClick = () => {
+    addToast('success', 'Sign up success!');
+  };
 
   return (
     <>
@@ -65,7 +76,7 @@ function RegisterForm() {
               }}
             />
           </>
-          <button type="text" className={cx('button')}>
+          <button type="text" className={cx('button')} onClick={handleClick}>
             Register
           </button>
           <Link to={config.routes.login} className={cx('link')}>
@@ -73,6 +84,7 @@ function RegisterForm() {
           </Link>
         </div>
       </div>
+      <ToastPortal ref={toastRef} autoClose={true} />
     </>
   );
 }
