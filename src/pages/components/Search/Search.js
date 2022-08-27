@@ -6,6 +6,8 @@ import classNames from 'classnames/bind';
 import styles from './Search.module.scss';
 import SearchResults from './SearchResults';
 import { useClickOutside } from '~/hooks';
+import config from '~/config';
+import { Link } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 function Search() {
@@ -45,9 +47,9 @@ function Search() {
           onChange={handleSearch}
           onFocus={handleShow}
         />
-        <button type="button" className={cx('search-button')}>
+        <Link type="button" className={cx('search-button')} to={config.routes.search}>
           <FontAwesomeIcon icon={faMagnifyingGlass} />
-        </button>
+        </Link>
       </div>
       {showResult && searchResult.length > 0 && <SearchResults items={searchResult} />}
     </div>

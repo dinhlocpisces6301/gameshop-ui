@@ -16,7 +16,6 @@ function ProductGallery({ data = valueApi }) {
   const [imgIndex, setImgIndex] = useState(0);
   //   gắn giá trị khởi tạo là bức hình đầu tiên
   const [screenPath, setscreenPath] = useState(valueApi[0]);
-  console.log('re-render');
   useLayoutEffect(() => {
     const timerId = setInterval(nextSlide, 1000);
 

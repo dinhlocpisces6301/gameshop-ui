@@ -29,7 +29,6 @@ const ToastPortal = forwardRef(({ autoClose = false, autoCloseTime = 3000 }, ref
       // Limit the number of toast
       if (toasts.length < 3) {
         setToasts([...toasts, { ...toast, id: uuid() }]);
-        console.log('add');
       }
     },
   }));

@@ -8,7 +8,7 @@
 .container {
   display: flex;
   flex-direction: row;
-  padding: 3.2rem calc((100% - var(--header-width) - var(--sidebar-width) * 2) / 2);
+  padding: 3.2rem calc((100% - var(--content-size) - var(--sidebar-width) * 2) / 2);
 }
 
 .content {
@@ -16,6 +16,5 @@
   min-height: 545px;
   height: auto;
   background-color: transparent;
-  margin-right: var(--sidebar-width);
-  margin-left: var(--sidebar-width);
+  margin: 0 var(--sidebar-width);
 }

@@ -1,7 +1,7 @@
 .wrapper {
-  width: calc(var(--header-width) / 2);
+  width: calc(var(--content-size) / 2);
   height: 50rem;
-  margin: 0 calc(var(--header-width) / 4);
+  margin: 0 calc(var(--content-size) / 4);
 
   display: flex;
   flex-direction: column;
@@ -50,7 +50,6 @@
   align-self: center;
   width: 16rem;
   padding: 1rem 0;
-  border: none;
   background-color: #1a4490;
   color: var(--white);
   font-size: 1.6rem;

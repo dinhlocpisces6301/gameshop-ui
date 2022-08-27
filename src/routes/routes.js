@@ -14,6 +14,10 @@ import Search from '~/pages/Search';
 import Login from '~/pages/Login';
 import SignUp from '~/pages/SignUp';
 import ForgetPassword from '~/pages/ForgetPassword';
+import CartPage from '~/pages/CartPage';
+import WishListPage from '~/pages/WishListPage';
+import AboutPage from '~/pages/AboutPage';
+import CheckoutPage from '~/pages/CheckoutPage';
 
 // Public routes
 const publicRoutes = [
@@ -27,6 +31,10 @@ const publicRoutes = [
   { path: config.routes.login, component: Login, layout: HeaderOnly },
   { path: config.routes.signup, component: SignUp, layout: HeaderOnly },
   { path: config.routes.forgetPassword, component: ForgetPassword, layout: HeaderOnly },
+  { path: config.routes.cart, component: CartPage, layout: HeaderOnly },
+  { path: config.routes.wishlist, component: WishListPage, layout: HeaderOnly },
+  { path: config.routes.about, component: AboutPage, layout: HeaderOnly },
+  { path: config.routes.checkout, component: CheckoutPage, layout: HeaderOnly },
 ];
 
 // Private routes

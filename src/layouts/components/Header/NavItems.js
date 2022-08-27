@@ -20,11 +20,6 @@ export const navItems = [
         title: 'News',
         path: config.routes.home,
       },
-      {
-        id: 4,
-        title: 'Wish List',
-        path: config.routes.home,
-      },
     ],
   },
   {
@@ -47,7 +42,7 @@ export const navItems = [
   {
     id: 3,
     title: 'About',
-    path: config.routes.home,
+    path: config.routes.about,
   },
   {
     id: 4,

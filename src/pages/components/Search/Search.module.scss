@@ -1,5 +1,5 @@
 .search {
-  margin-top: 2px;
+  margin-top: 1px;
 }
 
 .search-box {
@@ -29,6 +29,9 @@
 }
 
 .search-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: calc(var(--storenav-height) - 0.4rem);
   height: calc(var(--storenav-height) - 0.4rem);
   border: 1px solid var(--black);
@@ -38,6 +41,10 @@
   background-color: var(--search-button-bg-color);
   align-self: center;
   flex: 1;
+  overflow: hidden;
+  svg {
+    font-size: 1.6rem;
+  }
 
   &:hover {
     background-color: var(--search-button-bg-color-hover);

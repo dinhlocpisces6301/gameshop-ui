@@ -5,7 +5,7 @@ import styles from './ProductList.module.scss';
 
 import ProductItem from './ProductItem';
 import ProductReview from './ProductReview';
-
+import * as productServices from '~/services/productServices';
 const cx = classNames.bind(styles);
 
 function ProductList() {
@@ -17,73 +17,18 @@ function ProductList() {
     price: '',
   });
   const [value, setValue] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    const products = [
-      {
-        id: 1,
-        name: 'Grand Theft Auto I',
-        category: ['Open World I', 'Multiplayer', 'Action'],
-        price: '227.000đ',
-      },
-      {
-        id: 2,
-        name: 'Grand Theft Auto II',
-        category: ['Open World II', 'Multiplayer', 'Action'],
-        price: '227.000đ',
-      },
-      {
-        id: 3,
-        name: 'Grand Theft Auto III',
-        category: ['Open World III', 'Multiplayer', 'Action'],
-        price: '227.000đ',
-      },
-      {
-        id: 4,
-        name: 'Grand Theft Auto IIII',
-        category: ['Open World IV', 'Multiplayer', 'Action'],
-        price: '227.000đ',
-      },
-      {
-        id: 5,
-        name: 'Grand Theft Auto V',
-        category: ['Open World V', 'Multiplayer', 'Action', 'Fighter'],
-        price: '227.000đ',
-      },
-      {
-        id: 6,
-        name: 'Grand Theft Auto VI',
-        category: ['Open World VI', 'Multiplayer', 'Action'],
-        price: '227.000đ',
-      },
-      {
-        id: 7,
-        name: 'Grand Theft Auto VII',
-        category: ['Open World VII', 'Multiplayer', 'Action'],
-        price: '227.000đ',
-      },
-      {
-        id: 8,
-        name: 'Grand Theft Auto VIII',
-        category: ['Open World VIII', 'Multiplayer', 'Action'],
-        price: '227.000đ',
-      },
-      {
-        id: 9,
-        name: 'Grand Theft Auto IX',
-        category: ['Open World IX', 'Multiplayer', 'Action'],
-        price: '227.000đ',
-      },
-      {
-        id: 10,
-        name: 'Grand Theft Auto X',
-        category: ['Open World X', 'Multiplayer', 'Action', 'Fighter'],
-        price: '227.000đ',
-      },
-    ];
+    const fetchApi = async () => {
+      const result = await productServices.getProductList();
 
-    setReviewValue(products[0]);
-    setValue(products);
+      setReviewValue(result[0]);
+      setValue(result);
+      setIsLoaded(true);
+    };
+
+    fetchApi();
   }, []);
 
   return (
@@ -107,9 +52,7 @@ function ProductList() {
             );
           })}
         </div>
-        <div className={cx('review')}>
-          <ProductReview data={reviewValue} />
-        </div>
+        <div className={cx('review')}>{isLoaded && <ProductReview data={reviewValue} />}</div>
       </div>
       <div className={cx('footer')}></div>
     </div>

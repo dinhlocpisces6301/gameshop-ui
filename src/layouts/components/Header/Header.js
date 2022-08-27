@@ -80,10 +80,10 @@ function Header() {
           {currentUser ? (
             <>
               <div className={cx('action-menu')}>
-                <Button wishlist to={config.routes.home} className={cx('action-menu-button')}>
+                <Button wishlist to={config.routes.wishlist} className={cx('action-menu-button')}>
                   WISHLIST (0)
                 </Button>
-                <Button cart to={config.routes.home} className={cx('action-menu-button')}>
+                <Button cart to={config.routes.cart} className={cx('action-menu-button')}>
                   CART (0)
                 </Button>
               </div>
@@ -105,12 +105,12 @@ function Header() {
           ) : (
             <>
               <div className={cx('action-menu')}>
-                <Button primary href={config.routes.login} className={cx('action-menu-button')}>
+                <Button primary to={config.routes.login} className={cx('action-menu-button')}>
                   Login
                 </Button>
               </div>
               <div className={cx('action-menu')}>
-                <Button text href={config.routes.signup} className={cx('action-menu-button')}>
+                <Button text to={config.routes.signup} className={cx('action-menu-button')}>
                   Register
                 </Button>
               </div>

@@ -20,10 +20,10 @@ function ProductReview({ data }) {
         })}
       </div>
       <div className={cx('review-gallery')}>
-        <img className={cx('review-img')} alt="Game" src={process.env.PUBLIC_URL + '/images/GTAV.jpg'} />
-        <img className={cx('review-img')} alt="Game" src={process.env.PUBLIC_URL + '/images/GTAV.jpg'} />
-        <img className={cx('review-img')} alt="Game" src={process.env.PUBLIC_URL + '/images/GTAV.jpg'} />
-        <img className={cx('review-img')} alt="Game" src={process.env.PUBLIC_URL + '/images/GTAV.jpg'} />
+        <img className={cx('review-img')} alt="Game" src={data.img} />
+        <img className={cx('review-img')} alt="Game" src={data.img} />
+        <img className={cx('review-img')} alt="Game" src={data.img} />
+        <img className={cx('review-img')} alt="Game" src={data.img} />
       </div>
     </div>
   );

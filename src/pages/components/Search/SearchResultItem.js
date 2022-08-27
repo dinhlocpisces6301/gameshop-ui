@@ -2,14 +2,14 @@ import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 
 import styles from './Search.module.scss';
-import config from '~/config';
+// import config from '~/config';
 
 const cx = classNames.bind(styles);
 
 function SearchResultItem({ data }) {
   return (
     <div className={cx('result')}>
-      <Link to={config.routes.contact} className={cx('game-wrapper')}>
+      <Link to={`/product/id`} className={cx('game-wrapper')}>
         <img
           className={cx('game-img')}
           alt="Game"

@@ -12,7 +12,9 @@
   // Header
   --header-background-color: #171a21;
   --header-height: 10rem;
-  --header-width: 120rem;
+
+  //Content
+  --content-size: 120rem;
 
   // Side Bar
   --sidebar-width: 20rem;
@@ -26,12 +28,12 @@
   --storenav-bg-color-hover: #3fa7ff;
 
   //Search
-  --border-radius: 5px;
+  --border-radius: 6px;
   --search-box-bg-color: #316282;
   --search-button-bg-color: #3b6e8c;
   --search-button-bg-color-hover: #66beef;
 
-  //Body
+  // Body
   --store-bg-color: linear-gradient(180deg, #1b2838 0%, #1b2838 80%);
 
   // Footer
@@ -51,13 +53,15 @@ html {
   outline: 0;
 }
 
-a[href] {
-  text-decoration: none;
-  // text-align: center;
-}
-
 a,
 ul {
+  text-decoration: none;
   list-style: none;
   color: var(--text-color);
+}
+
+button {
+  cursor: pointer;
+  outline: none;
+  border: none;
 }

@@ -8,7 +8,7 @@
 }
 
 .container {
-  padding: 0 calc((100% - var(--header-width)) / 2);
+  padding: 0 calc((100% - var(--content-size)) / 2);
   display: flex;
   justify-content: center;
   flex: 4;

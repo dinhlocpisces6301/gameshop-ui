@@ -9,6 +9,10 @@ const routes = {
   login: '/login',
   signup: '/register',
   forgetPassword: '/forgetpassword',
+  cart: '/cart',
+  wishlist: '/wishlist',
+  about: '/about',
+  checkout: '/checkout',
 };
 
 export default routes;
