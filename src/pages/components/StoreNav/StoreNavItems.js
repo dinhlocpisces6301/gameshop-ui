@@ -1,3 +1,5 @@
+import config from '~/config';
+
 export const storeNavItems = [
   {
     id: 1,
@@ -56,7 +58,7 @@ export const storeNavItems = [
   {
     id: 3,
     title: 'Categories',
-    path: '/',
+    path: config.routes.category,
   },
   {
     id: 4,

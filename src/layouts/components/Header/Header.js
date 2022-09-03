@@ -1,24 +1,34 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import classNames from 'classnames/bind';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './Header.module.scss';
 import config from '~/config';
 import images from '~/assets/images';
 import Button from '~/components/Button';
 import Dropdown from '~/components/Dropdown';
-import { navItems, ActionMenuItems } from './NavItems.js';
+import { navItems } from './NavItems.js';
 import { useClickOutside } from '~/hooks';
-
+import { getInfo, userSelector } from '~/store/reducers/userSlice';
+import { logout } from '~/store/reducers/authSlice';
 const cx = classNames.bind(styles);
 
 function Header() {
-  const currentUser = true;
+  const currentUser = Boolean(localStorage.getItem('access_token'));
+  const dispatch = useDispatch();
+  const userInfo = useSelector(userSelector);
+
   const [storeDropdown, setStoreDropdown] = useState(false);
   const [communityDropdown, setCommunityDropdown] = useState(false);
   const [actionDropdown, setActionState] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(getInfo());
+  }, [dispatch]);
 
   const handleClick = () => {
     setActionState(!actionDropdown);
@@ -65,6 +75,25 @@ function Header() {
     }
   });
 
+  const ActionMenuItems = [
+    {
+      id: 1,
+      title: 'View Profile',
+      path: `/profile/${userInfo.nickname}`,
+    },
+    {
+      id: 2,
+      title: 'Logout',
+      path: '#',
+      action: () => {
+        dispatch(logout());
+        const timerId = setTimeout(() => {
+          clearTimeout(timerId);
+          navigate(config.routes.login, { replace: true });
+        }, 2000);
+      },
+    },
+  ];
   return (
     <header className={cx('wrapper')}>
       <div className={cx('container')}>
@@ -91,7 +120,8 @@ function Header() {
                 <div className={cx('user-info')}>
                   <div className={cx('user-name')}>
                     <Link to="#" onClick={handleClick}>
-                      Tô Diệp&nbsp;
+                      {userInfo.nickname || '{name}'}
+                      &nbsp;
                       <FontAwesomeIcon icon={faCaretDown} />
                     </Link>
                     {actionDropdown && <Dropdown items={ActionMenuItems} actionMenu />}

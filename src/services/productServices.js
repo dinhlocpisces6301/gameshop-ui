@@ -8,7 +8,7 @@ export const getProductList = async (q, type) => {
         type,
       },
     });
-    return res.data;
+    return res;
   } catch (error) {
     console.log(error);
   }

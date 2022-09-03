@@ -36,6 +36,6 @@
   background-color: var(--header-background-color);
   width: 200px;
   top: 80px;
-  right: 400px;
+  right: calc((100% - var(--content-size)) / 2 + 48px);
   box-shadow: 0 0 12px #000000;
 }

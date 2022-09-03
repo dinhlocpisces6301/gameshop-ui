@@ -1,0 +1,56 @@
+.wrapper {
+  width: 100%;
+  height: auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  text-align: center;
+  font-size: 3.2rem;
+  color: var(--white);
+  font-weight: normal;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  width: 50%;
+}
+
+.label {
+  font-size: 1.6rem;
+  color: var(--white);
+}
+
+.input,
+.content-input {
+  width: 100%;
+  font-size: 1.6rem;
+  padding: 8px 1rem;
+  color: var(--black);
+}
+.input {
+  margin-bottom: 2rem;
+}
+.content-input {
+  resize: none;
+  margin-bottom: 4rem;
+}
+
+.submit-button {
+  background-color: var(--primary);
+  color: var(--white);
+  padding: 0.5rem 0;
+  //   align-self: center;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

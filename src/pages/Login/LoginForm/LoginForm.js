@@ -1,7 +1,10 @@
 import classNames from 'classnames/bind';
-import { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useRef, useEffect } from 'react';
+/* eslint-disable no-unused-vars */
+import { Link, useNavigate, Navigate, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { login, authSelector } from '~/store/reducers/authSlice';
 import ToastPortal from '~/components/ToastPortal';
 import config from '~/config';
 import styles from './LoginForm.module.scss';
@@ -9,16 +12,34 @@ import styles from './LoginForm.module.scss';
 const cx = classNames.bind(styles);
 
 function LoginForm() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [usernameInput, setUsernameInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
-
   const toastRef = useRef();
   const addToast = (mode, message) => {
     toastRef.current.addMessage({ mode: mode, message: message });
   };
 
+  const { message, error } = useSelector(authSelector);
+
+  useEffect(() => {
+    console.log([message, error]);
+    if (error === true) {
+      addToast('error', message.content);
+    }
+    if (error === false) {
+      addToast('success', message.content);
+      const timerId = setTimeout(() => {
+        clearTimeout(timerId);
+        navigate(config.routes.home, { replace: true });
+      }, 3000);
+    }
+  }, [error, message, navigate]);
+
   const handleClick = () => {
-    addToast('success', 'Username or Password has been wrong!');
+    dispatch(login());
   };
 
   return (

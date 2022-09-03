@@ -19,7 +19,13 @@
   border: 1px solid transparent;
   border-top-left-radius: var(--border-radius);
   border-bottom-left-radius: var(--border-radius);
+  font-size: 1.2rem;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.1);
   flex: 4;
+
+  &::placeholder {
+    color: var(--black);
+  }
 
   &:hover,
   &:focus {

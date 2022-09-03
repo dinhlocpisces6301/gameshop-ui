@@ -50,27 +50,3 @@ export const navItems = [
     path: config.routes.contact,
   },
 ];
-
-// Call Api
-const User = {
-  id: 1,
-  nickname: 'dinhlocpisces',
-};
-
-export const ActionMenuItems = [
-  {
-    id: 1,
-    title: 'View Profile',
-    path: `/profile/${User.nickname}`,
-  },
-  // {
-  //   id: 2,
-  //   title: 'Account Details',
-  //   path: config.routes.home,
-  // },
-  {
-    id: 3,
-    title: 'Logout',
-    path: config.routes.home,
-  },
-];

@@ -1,7 +1,10 @@
 const routes = {
   notFound: '*',
   home: '/',
-  category: '/category/:genre',
+  categoryWithPagination: '/category/:genre&_page=:page',
+  categoryWithPaginationDefault: '/category/:genre&_page=',
+  categoryWithGenre: '/category/:genre',
+  category: '/category',
   product: '/product/:productID',
   contact: '/contact',
   profile: '/profile/:nickname',

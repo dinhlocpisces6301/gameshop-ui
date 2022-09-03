@@ -1,7 +1,13 @@
+import ContactForm from './ContactForm';
+
 function Contact() {
   document.title = 'Contact';
 
-  return <h2>Contact</h2>;
+  return (
+    <>
+      <ContactForm />
+    </>
+  );
 }
 
 export default Contact;

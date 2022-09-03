@@ -23,6 +23,9 @@ import CheckoutPage from '~/pages/CheckoutPage';
 const publicRoutes = [
   { path: config.routes.notFound, component: NotFound, layout: HeaderOnly },
   { path: config.routes.home, component: Home },
+  { path: config.routes.categoryWithPagination, component: Category },
+  { path: config.routes.categoryWithPaginationDefault, component: Category },
+  { path: config.routes.categoryWithGenre, component: Category },
   { path: config.routes.category, component: Category },
   { path: config.routes.contact, component: Contact, layout: HeaderOnly },
   { path: config.routes.profile, component: Profile, layout: HeaderOnly },

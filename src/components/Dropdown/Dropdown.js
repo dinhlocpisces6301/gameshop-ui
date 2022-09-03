@@ -18,7 +18,9 @@ function Dropdown({ items, navbar = false, storenav = false, search = false, act
         {items.map((item) => {
           return (
             <li key={item.id} className={cx('subnav-item')}>
-              <Link to={item.path}>{item.title}</Link>
+              <Link to={item.path} onClick={item.action}>
+                {item.title}
+              </Link>
             </li>
           );
         })}
