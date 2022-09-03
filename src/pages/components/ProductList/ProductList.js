@@ -1,6 +1,6 @@
 // import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './ProductList.module.scss';
@@ -11,7 +11,7 @@ import * as productServices from '~/services/productServices';
 import { useNavigate, useParams } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
-function ProductList({ data, pagination = true }) {
+function ProductList({ data, pagination = false }) {
   const { genre, page } = useParams();
   const navigate = useNavigate();
   console.log(genre, page);
@@ -84,11 +84,12 @@ function ProductList({ data, pagination = true }) {
       <div className={cx('footer')}>
         {pagination && (
           <>
-            <button className={cx('prev-button')} onClick={handleClickPrev}>
-              <FontAwesomeIcon icon={faCaretLeft} />
+            <button className={cx('prev-button')} onClick={handleClickPrev} disabled={_page === 1}>
+              <FontAwesomeIcon icon={faChevronLeft} />
             </button>
+
             <button className={cx('next-button')} onClick={handleClickNext}>
-              <FontAwesomeIcon icon={faCaretRight} />
+              <FontAwesomeIcon icon={faChevronRight} />
             </button>
           </>
         )}

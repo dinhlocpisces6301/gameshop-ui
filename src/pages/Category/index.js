@@ -9,7 +9,7 @@ function Category() {
   return (
     <>
       <StoreNav />
-      <ProductList />
+      <ProductList pagination={true} />
     </>
   );
 }
