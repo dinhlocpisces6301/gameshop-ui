@@ -40,10 +40,8 @@ function App() {
           {authRoutes.map((route, index) => {
             const Page = route.component;
             let Layout = HeaderOnly;
-
-            // Login rồi không vào trang Login, Sign Up, Forget Password được nữa
             const isLoggedIn = Boolean(localStorage.getItem('access_token'));
-
+            // Login rồi không vào trang Login, Sign Up, Forget Password được nữa
             return (
               <Route
                 key={index}

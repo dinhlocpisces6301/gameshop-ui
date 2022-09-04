@@ -1,6 +1,6 @@
-import Slider from '~/pages/components/Slider';
 import InfoTab from './components/InfoTab';
 import ProductTab from './components/ProductTab';
+import SettingTab from './components/SettingTab';
 
 export const Items = [
   {
@@ -15,7 +15,7 @@ export const Items = [
   },
   {
     id: 3,
-    title: 'profile 3',
-    component: Slider,
+    title: 'setting',
+    component: SettingTab,
   },
 ];

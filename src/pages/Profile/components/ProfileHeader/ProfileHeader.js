@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCamera, faCaretDown, faXmark, faGear } from '@fortawesome/free-solid-svg-icons';
+import { faCamera, faXmark, faGear } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
 
@@ -31,10 +31,7 @@ function ProfileHeader() {
           )}
         </div>
         <div className={cx('user-info')}>
-          <h1 className={cx('user-name')}>
-            Tô Diệp
-            <FontAwesomeIcon icon={faCaretDown} className={cx('icon')} />
-          </h1>
+          <h1 className={cx('user-name')}>Tô Diệp</h1>
           <h1 className={cx('user-fullname')}>(Bùi Đình Lộc)</h1>
           {editState ? (
             <button
@@ -56,7 +53,7 @@ function ProfileHeader() {
               }}
             >
               <FontAwesomeIcon icon={faGear} className={cx('icon')} />
-              Edit Profile
+              Edit Pictures
             </button>
           )}
         </div>

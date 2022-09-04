@@ -61,6 +61,10 @@
   position: relative;
   bottom: 4rem;
   left: 12rem;
+
+  svg {
+    font-size: 1.6rem;
+  }
 }
 
 .user-info {
@@ -76,7 +80,7 @@
   font-size: 3rem;
   color: var(--white);
   font-weight: 500;
-
+  margin: 0;
   .icon {
     font-size: 2rem;
     margin-left: 8px;
@@ -87,6 +91,7 @@
   font-size: 1.6rem;
   color: var(--white);
   font-weight: 500;
+  margin: 0;
 }
 
 .edit-button {

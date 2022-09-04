@@ -1,12 +1,11 @@
 import classNames from 'classnames/bind';
 import { useState } from 'react';
-import { Items } from './itemValue';
 
 import styles from './MultiTab.module.scss';
 
 const cx = classNames.bind(styles);
 
-function MultiTab({ data = Items }) {
+function MultiTab({ data }) {
   const [tabIndex, setTabIndex] = useState(0);
 
   const renderHeader = data.map((item, index) => {
