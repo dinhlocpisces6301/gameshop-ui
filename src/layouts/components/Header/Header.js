@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { useState, useRef, useEffect } from 'react';
-import classNames from 'classnames/bind';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
+import classNames from 'classnames/bind';
 import config from '~/config';
 import images from '~/assets/images';
 import Button from '~/components/Button';
@@ -12,7 +12,7 @@ import Dropdown from '~/components/Dropdown';
 import { navItems } from './NavItems.js';
 import { useClickOutside } from '~/hooks';
 import { getInfo, userSelector } from '~/store/reducers/userSlice';
-import Cookies from 'js-cookie';
+import * as authServices from '~/services/authServices';
 
 import styles from './Header.module.scss';
 const cx = classNames.bind(styles);
@@ -24,7 +24,6 @@ function Header() {
   const [storeDropdown, setStoreDropdown] = useState(false);
   const [communityDropdown, setCommunityDropdown] = useState(false);
   const [actionDropdown, setActionState] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getInfo());
@@ -85,16 +84,11 @@ function Header() {
       id: 2,
       title: 'Logout',
       path: '#',
-      action: () => {
-        const timerId = setTimeout(() => {
-          clearTimeout(timerId);
-          Cookies.remove('jwt');
-          navigate(config.routes.login, { replace: true });
-        }, 2000);
-      },
+      action: authServices.logout,
     },
   ];
 
+  const isLoggedIn = authServices.isLoggedIn();
   return (
     <header className={cx('wrapper')}>
       <div className={cx('container')}>
@@ -107,7 +101,7 @@ function Header() {
         <ul className={cx('header-navbar')}>{renderNavItem}</ul>
         {/* --- Action Menu */}
         <div className={cx('action-menu-container')}>
-          {Cookies.get('jwt') !== undefined ? (
+          {isLoggedIn ? (
             <>
               <div className={cx('action-menu')}>
                 <Button wishlist to={config.routes.wishlist} className={cx('action-menu-button')}>

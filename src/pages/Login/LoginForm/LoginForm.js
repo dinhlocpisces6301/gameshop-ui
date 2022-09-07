@@ -8,6 +8,7 @@ import config from '~/config';
 import styles from './LoginForm.module.scss';
 import Cookies from 'js-cookie';
 import { useNotification } from '~/hooks';
+import useEnterPress from '~/hooks/useEnterPress';
 
 const cx = classNames.bind(styles);
 
@@ -17,6 +18,7 @@ function LoginForm() {
   const [passwordInput, setPasswordInput] = useState('');
   const [loading, setLoading] = useState(false);
   const toastRef = useRef();
+  const buttonRef = useRef();
   const Notify = useNotification(toastRef);
   // var mediumRegex = new RegExp(
   //   '^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})',
@@ -73,6 +75,8 @@ function LoginForm() {
     login();
   };
 
+  useEnterPress(buttonRef, handleClick);
+
   return (
     <>
       <div className={cx('wrapper')}>
@@ -111,7 +115,7 @@ function LoginForm() {
               Login
             </button>
           )}
-          <Link to={config.routes.forgetPassword} className={cx('link')}>
+          <Link to={config.routes.forgetPassword} className={cx('link')} ref={buttonRef}>
             Forgot your Password?
           </Link>
         </div>

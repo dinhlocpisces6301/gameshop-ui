@@ -4,7 +4,7 @@ import { publicRoutes, authRoutes, privateRoutes } from '~/routes';
 import DefaultLayout, { HeaderOnly } from '~/layouts';
 import { scrollToPosition } from '~/utils';
 import config from './config';
-import Cookies from 'js-cookie';
+import * as authServices from '~/services/authServices';
 
 function App() {
   let location = useLocation();
@@ -40,7 +40,7 @@ function App() {
           })}
           {authRoutes.map((route, index) => {
             const Page = route.component;
-            const isLoggedIn = Cookies.get('jwt') !== undefined;
+            const isLoggedIn = authServices.isLoggedIn();
             let Layout = HeaderOnly;
             // Login rồi không vào trang Login, Sign Up, Forget Password được nữa
             return (
@@ -62,7 +62,7 @@ function App() {
           {privateRoutes.map((route, index) => {
             const Page = route.component;
             let Layout = HeaderOnly;
-            const isLoggedIn = Cookies.get('jwt') !== undefined;
+            const isLoggedIn = authServices.isLoggedIn();
             // Chưa Loggin thì không vào được trang Profile, Cart, WishList, Checkout
             return (
               <Route
