@@ -1,14 +1,15 @@
-import { Fragment } from 'react';
+import ChangePasswordTab from './components/ChangePasswordTab';
+import EditProfileTab from './components/EditProfileTab';
 
 export const Items = [
   {
     id: 1,
     title: 'Edit Profile',
-    component: Fragment,
+    component: EditProfileTab,
   },
   {
     id: 2,
     title: 'Change Password',
-    component: Fragment,
+    component: ChangePasswordTab,
   },
 ];

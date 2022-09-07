@@ -18,7 +18,7 @@
 
 .header {
   height: 5rem;
-  background-color: #131c27;
+  background-color: var(--form-bg-color);
   padding-left: 2rem;
   margin-bottom: 1rem;
   border-top-left-radius: 4px;
@@ -40,7 +40,7 @@
 
 .footer {
   height: 3rem;
-  background-color: #131c27;
+  background-color: var(--form-bg-color);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -196,4 +196,19 @@
   margin-top: 1rem;
   width: 32rem;
   height: 16rem;
+}
+
+.not-found {
+  height: 12rem;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    font-size: 2rem;
+    text-transform: uppercase;
+    color: var(--white);
+  }
 }

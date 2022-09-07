@@ -1,11 +1,14 @@
+// import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import StoreNav from '~/pages/components/StoreNav';
-
+import ProductList from '../components/ProductList';
 function Search() {
-  document.title = 'Search';
+  const { page, keyword } = useParams();
 
   return (
     <>
       <StoreNav />
+      <ProductList pagination={true} typePage={'search'} title={`Page ${page || 1} - Search: ${keyword}`} />
     </>
   );
 }

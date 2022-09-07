@@ -11,7 +11,7 @@ function ProductReview({ data }) {
     <div className={cx('review-container')}>
       <div className={cx('review-title')}>{data.name}</div>
       <div className={cx('category-items')}>
-        {data.category.map((category, index) => {
+        {data.genreName.map((category, index) => {
           return (
             <Link to={`/category/${category}`} key={index} className={cx('category-item')}>
               {category}
@@ -20,10 +20,10 @@ function ProductReview({ data }) {
         })}
       </div>
       <div className={cx('review-gallery')}>
-        <img className={cx('review-img')} alt="Game" src={data.img} />
-        <img className={cx('review-img')} alt="Game" src={data.img} />
-        <img className={cx('review-img')} alt="Game" src={data.img} />
-        <img className={cx('review-img')} alt="Game" src={data.img} />
+        <img className={cx('review-img')} alt="Game" src={process.env.PUBLIC_URL + '/images/img-not-found.jpg'} />
+        <img className={cx('review-img')} alt="Game" src={process.env.PUBLIC_URL + '/images/img-not-found.jpg'} />
+        <img className={cx('review-img')} alt="Game" src={process.env.PUBLIC_URL + '/images/img-not-found.jpg'} />
+        <img className={cx('review-img')} alt="Game" src={process.env.PUBLIC_URL + '/images/img-not-found.jpg'} />
       </div>
     </div>
   );

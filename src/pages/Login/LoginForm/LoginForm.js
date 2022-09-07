@@ -1,45 +1,76 @@
 import classNames from 'classnames/bind';
-import { useState, useRef, useEffect } from 'react';
-/* eslint-disable no-unused-vars */
-import { Link, useNavigate, Navigate, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
-import { login, authSelector } from '~/store/reducers/authSlice';
+import * as authServices from '~/services/authServices';
 import ToastPortal from '~/components/ToastPortal';
 import config from '~/config';
 import styles from './LoginForm.module.scss';
+import Cookies from 'js-cookie';
+import { useNotification } from '~/hooks';
 
 const cx = classNames.bind(styles);
 
 function LoginForm() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
   const [usernameInput, setUsernameInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
+  const [loading, setLoading] = useState(false);
   const toastRef = useRef();
-  const addToast = (mode, message) => {
-    toastRef.current.addMessage({ mode: mode, message: message });
-  };
+  const Notify = useNotification(toastRef);
+  // var mediumRegex = new RegExp(
+  //   '^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})',
+  // );
+  // console.log(mediumRegex.test(passwordInput));
 
-  const { message, error } = useSelector(authSelector);
+  const login = async () => {
+    setLoading(true);
+    // Make Api call
+    const response = await authServices.login({
+      userName: usernameInput,
+      password: passwordInput,
+      rememberMe: false,
+    });
 
-  useEffect(() => {
-    console.log([message, error]);
-    if (error === true) {
-      addToast('error', message.content);
+    if (response.isSuccess === false) {
+      setLoading(false);
+      Notify('error', response.message);
     }
-    if (error === false) {
-      addToast('success', message.content);
+
+    if (response.isSuccess === true) {
+      Cookies.set('jwt', response.resultObj.token, { expires: 3, secure: true });
+      Cookies.set('user-id', response.resultObj.userId, { expires: 3, secure: true });
+      Notify('success', 'Login Successfully');
       const timerId = setTimeout(() => {
         clearTimeout(timerId);
+        setLoading(false);
         navigate(config.routes.home, { replace: true });
       }, 3000);
     }
-  }, [error, message, navigate]);
+  };
 
   const handleClick = () => {
-    dispatch(login());
+    var msg = '';
+    if (usernameInput === '') {
+      msg = 'Please re-fill your Username';
+      if (passwordInput === '') {
+        msg = 'Please re-fill your Username and Password';
+      }
+      Notify('warning', msg);
+      return;
+    }
+    if (passwordInput === '') {
+      msg = 'Please re-fill your Password';
+      Notify('warning', msg);
+      return;
+    }
+    if (passwordInput.length < 6) {
+      msg = 'Password must have at least 6 characters';
+      Notify('warning', msg);
+      return;
+    }
+
+    login();
   };
 
   return (
@@ -71,9 +102,15 @@ function LoginForm() {
               }}
             />
           </>
-          <button className={cx('button')} onClick={handleClick}>
-            Login
-          </button>
+          {loading ? (
+            <div className={cx('loading')}>
+              <span></span>
+            </div>
+          ) : (
+            <button className={cx('button')} onClick={handleClick}>
+              Login
+            </button>
+          )}
           <Link to={config.routes.forgetPassword} className={cx('link')}>
             Forgot your Password?
           </Link>

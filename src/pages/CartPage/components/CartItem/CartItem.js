@@ -10,7 +10,7 @@ function CartItem() {
     <>
       <div className={cx('cart-item')}>
         <Link to={'/product/id'} className={cx('img')}>
-          <img src={process.env.PUBLIC_URL + '/images/GTAV.jpg'} alt="" />
+          <img src={process.env.PUBLIC_URL + '/images/img-not-found.jpg'} alt="" />
         </Link>
         <div className={cx('item-detail')}>
           <div className={cx('item-name')}>

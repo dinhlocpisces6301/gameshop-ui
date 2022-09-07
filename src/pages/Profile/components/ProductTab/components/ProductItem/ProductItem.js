@@ -24,7 +24,7 @@ function ProductItem() {
           </div>
         </div>
         <div className={cx('img')}>
-          <img src={process.env.PUBLIC_URL + '/images/GTAV.jpg'} alt="Game" />
+          <img src={process.env.PUBLIC_URL + '/images/img-not-found.jpg'} alt="Game" />
         </div>
       </div>
     </>

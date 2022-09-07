@@ -6,10 +6,10 @@ import styles from './ProductGallery.module.scss';
 
 const cx = classNames.bind(styles);
 const valueApi = [
-  process.env.PUBLIC_URL + `/images/img${1}.jpg`,
-  process.env.PUBLIC_URL + `/images/img${2}.jpg`,
-  process.env.PUBLIC_URL + `/images/img${3}.jpg`,
-  process.env.PUBLIC_URL + `/images/img${4}.jpg`,
+  process.env.PUBLIC_URL + '/images/img-not-found.jpg',
+  process.env.PUBLIC_URL + '/images/img-not-found.jpg',
+  process.env.PUBLIC_URL + '/images/img-not-found.jpg',
+  process.env.PUBLIC_URL + '/images/img-not-found.jpg',
 ];
 
 function ProductGallery({ data = valueApi }) {

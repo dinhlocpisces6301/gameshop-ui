@@ -1,4 +1,5 @@
 import classNames from 'classnames/bind';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ProductGallery from '../ProductGallery';
 
@@ -6,71 +7,83 @@ import styles from './ProductDetail.module.scss';
 
 const cx = classNames.bind(styles);
 
-function ProductDetail() {
+function ProductDetail({ data }) {
+  const [value, setValue] = useState(undefined);
+
+  useEffect(() => {
+    setValue(data);
+  }, [data]);
+  console.log(value);
+
   return (
     <>
       <div className={cx('wrapper')}>
-        <div className={cx('container')}>
-          <div className={cx('gallery')}>
-            <ProductGallery />
-          </div>
-          <div className={cx('product-information')}>
-            <div className={cx('information-wrapper')}>
-              <img alt="product img" src={process.env.PUBLIC_URL + '/images/GTAV.jpg'} className={cx('product-img')} />
-              <div className={cx('product-description')}>
-                Grand Theft Auto V for PC offers players the option to explore the award-winning world of Los Santos and
-                Blaine County in resolutions of up to 4k and beyond, as well as the chance to experience the game
-                running at 60 frames per second.
+        {value !== undefined ? (
+          <>
+            <div className={cx('container')}>
+              <div className={cx('gallery')}>
+                <ProductGallery />
               </div>
-              <div className={cx('product-release-date')}>
-                <div className={cx('title')}>RELEASE DATE:</div>
-                <div className={cx('date')}>14 Apr, 2015</div>
-              </div>
-              <div className={cx('product-development')}>
-                <div className={cx('title')}>DEVELOPER:</div>
-                <Link to="/" className={cx('link')}>
-                  Rockstar North
-                </Link>
-              </div>
-              <div className={cx('product-publisher')}>
-                <div className={cx('title')}>PUBLISHER:</div>
-                <Link to="/" className={cx('link')}>
-                  Rockstar Games
-                </Link>
-              </div>
-              <div className={cx('product-category')}>
-                <div className={cx('title')}>CATEGORY:</div>
-                <div className={cx('category-wrapper')}>
-                  <Link to={`/category/1`} className={cx('category-item')}>
-                    Open World
-                  </Link>
-                  <Link to={`/category/2`} className={cx('category-item')}>
-                    Multiplayer
-                  </Link>
-                  <Link to={`/category/3`} className={cx('category-item')}>
-                    Action
-                  </Link>
-                  <Link to={`/category/4`} className={cx('category-item')}>
-                    Fighter
-                  </Link>
-                  <Link to={`/category/5`} className={cx('category-item')}>
-                    Sexaully
-                  </Link>
+              <div className={cx('product-information')}>
+                <div className={cx('information-wrapper')}>
+                  <img
+                    alt="product img"
+                    src={process.env.PUBLIC_URL + '/images/img-not-found.jpg'}
+                    className={cx('product-img')}
+                  />
+                  <h2 className={cx('product-name')}>{value.name}</h2>
+                  <div className={cx('product-description')}>{value.description}</div>
+                  <div className={cx('product-release-date')}>
+                    <div className={cx('title')}>RELEASE DATE:</div>
+                    <div className={cx('date')}>{new Date(value.createdDate).toLocaleDateString(undefined)}</div>
+                  </div>
+                  <div className={cx('product-development')}>
+                    <div className={cx('title')}>DEVELOPER:</div>
+                    <Link to="#" className={cx('link')}>
+                      Rockstar North
+                    </Link>
+                  </div>
+                  <div className={cx('product-publisher')}>
+                    <div className={cx('title')}>PUBLISHER:</div>
+                    <Link to="#" className={cx('link')}>
+                      Rockstar Games
+                    </Link>
+                  </div>
+                  <div className={cx('product-category')}>
+                    <div className={cx('title')}>CATEGORY:</div>
+                    <div className={cx('category-wrapper')}>
+                      {value.genreName !== undefined &&
+                        value.genreName.map((item, index) => {
+                          const id = value.genreIDs[index];
+                          return (
+                            <Link to={`/category/${id}`} className={cx('category-item')} key={id}>
+                              {item}
+                            </Link>
+                          );
+                        })}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div className={cx('action-container')}>
-          <div className={cx('wishlist-section')}>
-            <button className={cx('wishlish-button')}>Add to your WishList</button>
-          </div>
-          <div className={cx('cart-section')}>
-            <span className={cx('origin-price')}>200.000đ</span>
-            <span className={cx('discount-price')}>200.000đ</span>
-            <button className={cx('cart-button')}>Add to Cart</button>
-          </div>
-        </div>
+            <div className={cx('action-container')}>
+              <div className={cx('wishlist-section')}>
+                <button className={cx('wishlish-button')}>Add to your WishList</button>
+              </div>
+              <div className={cx('cart-section')}>
+                <span className={cx('origin-price')}>{value.price}</span>
+                <span className={cx('discount-price')}>{(value.price * (1 - value.discount / 100)).toString()}</span>
+                <button className={cx('cart-button')}>Add to Cart</button>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className={cx('not-found')}>
+              <span>404 not found</span>
+            </div>
+          </>
+        )}
       </div>
     </>
   );

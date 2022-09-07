@@ -34,7 +34,10 @@
   height: 20rem;
   margin-bottom: 0.5rem;
 }
-
+.product-name {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
 .product-description {
   font-size: 1.4rem;
   text-align: justify;
@@ -152,5 +155,21 @@
   &:hover {
     background: #8eb504;
     color: var(--black);
+  }
+}
+
+.not-found {
+  height: 12rem;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    font-size: 2rem;
+    text-transform: uppercase;
+    color: var(--white);
+    font-weight: 600;
   }
 }

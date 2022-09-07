@@ -83,7 +83,7 @@ export default function Slider() {
         return (
           <div className={slideIndex === index + 1 ? cx('slide', 'active-anim') : cx('slide')} key={item.id}>
             <Link to={`/product/${item.id}`}>
-              <img src={process.env.PUBLIC_URL + `/images/img${index + 1}.jpg`} alt="" />
+              <img src={process.env.PUBLIC_URL + '/images/img-not-found.jpg'} alt="" />
             </Link>
             <div className={cx('detail-wrapper')}>
               <Link to={`/product/${item.id}`} className={cx('detail-link')}>

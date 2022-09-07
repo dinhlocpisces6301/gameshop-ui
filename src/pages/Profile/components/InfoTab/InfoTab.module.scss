@@ -2,8 +2,6 @@
   width: 100%;
   height: auto;
   background-color: #171a21;
-
-  //   background-color: #fff;
 }
 
 .title {
@@ -12,12 +10,10 @@
   text-transform: capitalize;
   color: var(--white);
 
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-
   .icon {
     margin-right: 1rem;
+    margin-bottom: 3px;
+    font-size: 2rem;
   }
 
   user-select: none;
@@ -34,10 +30,8 @@
 .content {
   width: calc(100% - 16rem);
   min-height: auto;
-  background-color: #131c27;
-  // box-shadow: 2px 2px 2px rgba(255, 255, 255, 0.2);
+  background-color: var(--form-bg-color);
   border: 1px solid var(--black);
-  // background-color: transparent;
   margin: 3rem 0;
   padding-bottom: 2rem;
 
@@ -48,27 +42,26 @@
 
   .title {
     font-size: 1.8rem;
-    margin: 3rem 0 1rem 3rem;
+    margin: 3rem 0 1rem 5rem;
     padding: 0;
     text-transform: capitalize;
     color: var(--white);
     width: 25%;
     border-bottom: 1px solid var(--white);
-    text-align: left;
-
     justify-content: flex-start;
   }
 }
 .line {
   display: inline-flex;
   flex-direction: row;
-  margin: 0.5rem 0 0.5rem 8rem;
+  margin: 0.5rem 0 0.5rem 10rem;
   width: 50%;
   justify-content: space-between;
 }
 .label {
   font-size: 1.6rem;
   color: var(--white);
+  user-select: none;
 }
 .text {
   font-size: 1.8rem;

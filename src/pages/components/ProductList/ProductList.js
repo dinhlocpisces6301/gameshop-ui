@@ -9,54 +9,61 @@ import ProductItem from './ProductItem';
 import ProductReview from './ProductReview';
 import * as productServices from '~/services/productServices';
 import { useNavigate, useParams } from 'react-router-dom';
+import config from '~/config';
 const cx = classNames.bind(styles);
 
-function ProductList({ data, pagination = false }) {
-  const { genre, page } = useParams();
+function ProductList({ data, pagination = false, typePage = '', title = 'List Product' }) {
   const navigate = useNavigate();
-  console.log(genre, page);
+
+  const { genre, keyword, page } = useParams();
+  // console.log({ _genre: genre, _keyword: keyword, _page: page });
   const [reviewIndex, setReviewIndex] = useState(0);
-  const [reviewValue, setReviewValue] = useState({
-    id: 0,
-    name: '',
-    category: [],
-    price: '',
-  });
+  const [reviewValue, setReviewValue] = useState({});
   const [value, setValue] = useState([]);
-  const [title, setTitle] = useState('Title');
   const [isLoaded, setIsLoaded] = useState(false);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const fetchApi = async () => {
-      const result = await productServices.getProductList();
-      setReviewValue(result.data[0]);
-      setValue(result.data);
-      setTitle(result.title);
+      var result;
+      if (typePage === 'search') {
+        result = await productServices.getProductsByKeyword(keyword, page || 1);
+      } else if (typePage === 'category') {
+        result = await productServices.getProductsByGenreId(genre, page || 1);
+      } else {
+        result = await productServices.getProductsByGenreId('', page || 1);
+      }
+      setReviewValue(result.items[0]);
+      setValue(result.items);
       setIsLoaded(true);
+      setTotalPages(result.pageCount);
     };
 
     fetchApi();
-  }, []);
+  }, [genre, keyword, page, typePage]);
 
   var _page = parseInt(page);
   const handleClickPrev = () => {
-    if (page === undefined || page === 'undefined' || _page === 1) {
+    if (page === undefined || page === 'undefined') {
       return;
     } else {
-      navigate(`/category/${genre}&_page=${_page - 1}`);
-      // console.log(`/category/${genre}&_page=${page * 1.0 - 1}`);
+      navigate(`/${typePage}/${genre || `q=${keyword}`}/page=${_page - 1}`);
     }
   };
   const handleClickNext = () => {
     if (page === undefined || page === 'undefined') {
       _page = 1;
-    } else if (_page >= 10) {
-      return;
     }
     const _nextPage = _page + 1;
-    navigate(`/category/${genre}&_page=${_nextPage.toString()}`);
-    // console.log(`/category/${genre}&_page=${page * 1.0 + 1}`);
+    navigate(`/${typePage}/${genre || `q=${keyword}`}/page=${_nextPage.toString()}`);
   };
+
+  useEffect(() => {
+    console.log(totalPages);
+    if (_page < 1 || _page > totalPages) {
+      navigate(config.routes.notFound, { replace: true });
+    }
+  }, [_page, navigate, totalPages]);
 
   return (
     <div className={cx('wrapper')}>
@@ -64,31 +71,39 @@ function ProductList({ data, pagination = false }) {
         <h2>{title}</h2>
       </div>
       <div className={cx('container')}>
-        <div className={cx('content')}>
-          {value.map((item, index) => {
-            return (
-              <div
-                key={index}
-                onMouseEnter={() => {
-                  setReviewIndex(index);
-                  setReviewValue(value[index]);
-                }}
-              >
-                <ProductItem data={item} isActive={index === reviewIndex} />
-              </div>
-            );
-          })}
-        </div>
-        <div className={cx('review')}>{isLoaded && <ProductReview data={reviewValue} />}</div>
+        {value.length > 0 ? (
+          <>
+            <div className={cx('content')}>
+              {value.map((item, index) => {
+                return (
+                  <div
+                    key={index}
+                    onMouseEnter={() => {
+                      setReviewIndex(index);
+                      setReviewValue(value[index]);
+                    }}
+                  >
+                    <ProductItem data={item} isActive={index === reviewIndex} />
+                  </div>
+                );
+              })}
+            </div>
+            <div className={cx('review')}>{isLoaded && <ProductReview data={reviewValue} />}</div>
+          </>
+        ) : (
+          <div className={cx('not-found')}>
+            <span>no result(s) found</span>
+          </div>
+        )}
       </div>
       <div className={cx('footer')}>
-        {pagination && (
+        {totalPages > 1 && pagination && (
           <>
-            <button className={cx('prev-button')} onClick={handleClickPrev} disabled={_page === 1}>
+            <button className={cx('prev-button')} onClick={handleClickPrev} disabled={_page <= 1}>
               <FontAwesomeIcon icon={faChevronLeft} />
             </button>
 
-            <button className={cx('next-button')} onClick={handleClickNext}>
+            <button className={cx('next-button')} onClick={handleClickNext} disabled={_page === totalPages}>
               <FontAwesomeIcon icon={faChevronRight} />
             </button>
           </>

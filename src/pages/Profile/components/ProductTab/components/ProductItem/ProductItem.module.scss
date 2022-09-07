@@ -3,7 +3,7 @@
   --size-item: 16rem;
   height: var(--size-item);
   margin: 3rem 0;
-  background-color: #131c27;
+  background-color: var(--form-bg-color);
   border: 1px solid var(--black);
   box-shadow: 4px 3px 6px rgba(255, 255, 255, 0.1);
   display: flex;

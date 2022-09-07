@@ -5,7 +5,6 @@ import classNames from 'classnames/bind';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import styles from './Header.module.scss';
 import config from '~/config';
 import images from '~/assets/images';
 import Button from '~/components/Button';
@@ -13,11 +12,12 @@ import Dropdown from '~/components/Dropdown';
 import { navItems } from './NavItems.js';
 import { useClickOutside } from '~/hooks';
 import { getInfo, userSelector } from '~/store/reducers/userSlice';
-import { logout } from '~/store/reducers/authSlice';
+import Cookies from 'js-cookie';
+
+import styles from './Header.module.scss';
 const cx = classNames.bind(styles);
 
 function Header() {
-  const currentUser = Boolean(localStorage.getItem('access_token'));
   const dispatch = useDispatch();
   const userInfo = useSelector(userSelector);
 
@@ -86,14 +86,15 @@ function Header() {
       title: 'Logout',
       path: '#',
       action: () => {
-        dispatch(logout());
         const timerId = setTimeout(() => {
           clearTimeout(timerId);
+          Cookies.remove('jwt');
           navigate(config.routes.login, { replace: true });
         }, 2000);
       },
     },
   ];
+
   return (
     <header className={cx('wrapper')}>
       <div className={cx('container')}>
@@ -106,7 +107,7 @@ function Header() {
         <ul className={cx('header-navbar')}>{renderNavItem}</ul>
         {/* --- Action Menu */}
         <div className={cx('action-menu-container')}>
-          {currentUser ? (
+          {Cookies.get('jwt') !== undefined ? (
             <>
               <div className={cx('action-menu')}>
                 <Button wishlist to={config.routes.wishlist} className={cx('action-menu-button')}>

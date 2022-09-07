@@ -1,9 +1,10 @@
 import { Fragment, useEffect } from 'react';
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
-import { publicRoutes, authRoutes } from '~/routes';
+import { publicRoutes, authRoutes, privateRoutes } from '~/routes';
 import DefaultLayout, { HeaderOnly } from '~/layouts';
 import { scrollToPosition } from '~/utils';
 import config from './config';
+import Cookies from 'js-cookie';
 
 function App() {
   let location = useLocation();
@@ -39,8 +40,8 @@ function App() {
           })}
           {authRoutes.map((route, index) => {
             const Page = route.component;
+            const isLoggedIn = Cookies.get('jwt') !== undefined;
             let Layout = HeaderOnly;
-            const isLoggedIn = Boolean(localStorage.getItem('access_token'));
             // Login rồi không vào trang Login, Sign Up, Forget Password được nữa
             return (
               <Route
@@ -53,6 +54,27 @@ function App() {
                     <Layout>
                       <Page />
                     </Layout>
+                  )
+                }
+              />
+            );
+          })}
+          {privateRoutes.map((route, index) => {
+            const Page = route.component;
+            let Layout = HeaderOnly;
+            const isLoggedIn = Cookies.get('jwt') !== undefined;
+            // Chưa Loggin thì không vào được trang Profile, Cart, WishList, Checkout
+            return (
+              <Route
+                key={index}
+                path={route.path}
+                element={
+                  isLoggedIn ? (
+                    <Layout>
+                      <Page />
+                    </Layout>
+                  ) : (
+                    <Navigate to={config.routes.login} replace={true} />
                   )
                 }
               />

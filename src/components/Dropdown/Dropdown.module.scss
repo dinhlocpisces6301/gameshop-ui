@@ -1,12 +1,18 @@
 .wrapper {
   position: absolute;
-  z-index: 2;
+  z-index: 10;
 }
 
 .navbar {
   background-color: var(--header-background-color);
-  width: 24rem;
+  width: 20rem;
   box-shadow: 0 0 8px #000000;
+
+  a {
+    height: 6rem;
+    line-height: 6rem !important;
+    font-size: 1.4rem !important;
+  }
 }
 
 .storenav {
@@ -34,7 +40,7 @@
 
 .actionMenu {
   background-color: var(--header-background-color);
-  width: 200px;
+  width: 16rem;
   top: 80px;
   right: calc((100% - var(--content-size)) / 2 + 48px);
   box-shadow: 0 0 12px #000000;

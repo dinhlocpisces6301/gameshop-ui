@@ -1,10 +1,9 @@
 const routes = {
   notFound: '*',
   home: '/',
-  product: '/product/:productID',
+  product: '/product/:productId',
   contact: '/contact',
   profile: '/profile/:nickname',
-  search: '/search',
   login: '/login',
   signup: '/register',
   forgetPassword: '/forgetpassword',
@@ -12,10 +11,13 @@ const routes = {
   wishlist: '/wishlist',
   about: '/about',
   checkout: '/checkout',
-  categoryWithPagination: '/category/:genre&_page=:page',
-  categoryWithPaginationDefault: '/category/:genre&_page=',
-  categoryWithGenre: '/category/:genre',
   category: '/category',
+  categoryWithGenre: '/category/:genre',
+  categoryWithPaginationDefault: '/category/:genre/page=',
+  categoryWithPagination: '/category/:genre/page=:page',
+  search: '/search/q=:keyword',
+  searchWithPaginationDefault: '/search/q=:keyword/page=',
+  searchWithPagination: '/search/q=:keyword/page=:page',
 };
 
 export default routes;
