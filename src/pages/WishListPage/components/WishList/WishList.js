@@ -1,27 +1,35 @@
 //import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import Button from '~/components/Button';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import config from '~/config';
+import Button from '~/components/Button';
 import WishListItem from '../WishListItem';
-
+import { getWishlist, wishlistSelector } from '~/store/reducers/wishlistSlice';
 import styles from './WishList.module.scss';
-
 const cx = classNames.bind(styles);
 function WishList() {
+  const dispatch = useDispatch();
+  const wishlist = useSelector(wishlistSelector);
+  const [wishlistData, setWishlistData] = useState([]);
+  useEffect(() => {
+    dispatch(getWishlist());
+  }, [dispatch]);
+
+  useEffect(() => {
+    setWishlistData(wishlist.data || []);
+  }, [wishlist]);
   return (
     <>
       <div className={cx('wrapper')}>
         <h2 className={cx('title')}>Your WishList (5)</h2>
         <div className={cx('content')}>
           <div className={cx('wishlist-container')}>
-            {true ? (
-              <>
-                <WishListItem />
-                <WishListItem isAdded={true} />
-                <WishListItem />
-                <WishListItem isAdded={true} />
-                <WishListItem />
-              </>
+            {wishlistData.length > 0 ? (
+              wishlistData.map((item, index) => {
+                return <WishListItem key={item.gameID} data={item} />;
+              })
             ) : (
               <div className={cx('empty-wishlist')}>
                 <h2>Empty WishList</h2>

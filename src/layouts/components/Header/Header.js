@@ -13,25 +13,27 @@ import { navItems } from './NavItems.js';
 import { useClickOutside } from '~/hooks';
 import { getUserData, userSelector } from '~/store/reducers/userSlice';
 import { getCart, cartSelector } from '~/store/reducers/cartSlice';
+import { getWishlist, wishlistSelector } from '~/store/reducers/wishlistSlice';
 import * as authServices from '~/services/authServices';
 
 import styles from './Header.module.scss';
 const cx = classNames.bind(styles);
 
 function Header() {
+  const navigate = useNavigate();
   const [storeDropdown, setStoreDropdown] = useState(false);
   const [communityDropdown, setCommunityDropdown] = useState(false);
   const [actionDropdown, setActionState] = useState(false);
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userInfo = useSelector(userSelector);
-  const [userName, setUserName] = useState(undefined);
-
   useEffect(() => {
     dispatch(getUserData());
+    dispatch(getCart());
+    dispatch(getWishlist());
   }, [dispatch]);
 
+  const userInfo = useSelector(userSelector);
+  const [userName, setUserName] = useState(undefined);
   useLayoutEffect(() => {
     if (userInfo.data !== undefined) {
       setUserName(userInfo.data.userName);
@@ -39,18 +41,17 @@ function Header() {
   }, [userInfo]);
 
   const cart = useSelector(cartSelector);
-  const [cartData, setCartData] = useState([0]);
-  useEffect(() => {
-    dispatch(getCart());
-  }, [dispatch]);
+  const [cartData, setCartData] = useState([]);
+  useLayoutEffect(() => {
+    setCartData(cart.data || []);
+  }, [cart]);
 
+  const wishlist = useSelector(wishlistSelector);
+  const [wishlistData, setWishlistData] = useState([]);
   useLayoutEffect(() => {
-    setCartData(cart.data);
-  }, [cart]);
-  const [wishlistData, setWishlistData] = useState([0]);
-  useLayoutEffect(() => {
-    setWishlistData(cart.data || []);
-  }, [cart]);
+    setWishlistData(wishlist.data || []);
+  }, [wishlist]);
+
   const handleClick = () => {
     setActionState(!actionDropdown);
   };

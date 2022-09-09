@@ -5,7 +5,10 @@ import { Link } from 'react-router-dom';
 
 import ProductGallery from '../ProductGallery';
 import { cartSelector, getCart } from '~/store/reducers/cartSlice';
+import { getWishlist, wishlistSelector } from '~/store/reducers/wishlistSlice';
 import * as cartServices from '~/services/cartServices';
+import * as wishlistServices from '~/services/wishlistServices';
+
 import ToastPortal from '~/components/ToastPortal';
 import { useNotification } from '~/hooks';
 
@@ -29,26 +32,61 @@ function ProductDetail({ data }) {
     const response = await cartServices.addToCart({ gameID: data.gameID });
     console.log(response);
     if (response.isSuccess === true) {
-      Notify('success', 'Removed Successfully');
+      Notify('success', 'Add to Cart Successfully');
       const timerId = setTimeout(() => {
         clearTimeout(timerId);
+        setLoading(false);
         dispatch(getCart());
       }, 3000);
     }
     if (response.isSuccess === false) {
-      Notify('error', 'Add to cart Fail');
-      setLoading(false);
+      Notify('error', 'Add to Cart fail');
+      const timerId = setTimeout(() => {
+        clearTimeout(timerId);
+        setLoading(false);
+      }, 3000);
     }
   };
   const handleClick = () => {
     addToCart();
   };
 
+  const [loading2, setLoading2] = useState(false);
+  const addToWishlist = async () => {
+    setLoading2(true);
+    const response = await wishlistServices.addToWishlist({ gameID: data.gameID });
+    console.log(response);
+    if (response.isSuccess === true) {
+      Notify('success', 'Add to Wishlist Successfully');
+      const timerId = setTimeout(() => {
+        clearTimeout(timerId);
+        setLoading2(false);
+        dispatch(getWishlist());
+      }, 3000);
+    }
+    if (response.isSuccess === false) {
+      Notify('error', 'Add to Wishlist fail');
+      const timerId = setTimeout(() => {
+        clearTimeout(timerId);
+        setLoading2(false);
+      }, 3000);
+    }
+  };
+  const handleAddToWishlist = () => {
+    addToWishlist();
+  };
+
   const cart = useSelector(cartSelector);
   const [cartData, setCartData] = useState([]);
   useEffect(() => {
-    setCartData(cart.data);
+    setCartData(cart.data || []);
   }, [cart]);
+
+  const wishlist = useSelector(wishlistSelector);
+  const [wishlistData, setWishListData] = useState([]);
+  useEffect(() => {
+    setWishListData(wishlist.data || []);
+  }, [wishlist]);
   return (
     <>
       <div className={cx('wrapper')}>
@@ -102,7 +140,21 @@ function ProductDetail({ data }) {
             </div>
             <div className={cx('action-container')}>
               <div className={cx('wishlist-section')}>
-                <button className={cx('wishlish-button')}>Add to your WishList</button>
+                {wishlistData.find((element) => element.gameID === value.gameID) === undefined ? (
+                  loading2 ? (
+                    <div className={cx('loading-2')}>
+                      <span></span>
+                    </div>
+                  ) : (
+                    <button className={cx('wishlish-button')} onClick={handleAddToWishlist}>
+                      Add to your WishList
+                    </button>
+                  )
+                ) : (
+                  <Link to={config.routes.wishlist} className={cx('view-wishlist-button')}>
+                    View WishList
+                  </Link>
+                )}
               </div>
               <div className={cx('cart-section')}>
                 {value.discount !== 0 && <span className={cx('origin-price')}>{value.price}</span>}
@@ -113,7 +165,7 @@ function ProductDetail({ data }) {
                       <span></span>
                     </div>
                   ) : (
-                    <button className={cx('loading')} onClick={handleClick}>
+                    <button className={cx('cart-button')} onClick={handleClick}>
                       Add to Cart
                     </button>
                   )

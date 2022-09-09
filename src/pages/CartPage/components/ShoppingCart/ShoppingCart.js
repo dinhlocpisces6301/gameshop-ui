@@ -19,7 +19,7 @@ function ShoppingCart() {
   }, [dispatch]);
 
   useEffect(() => {
-    setCartData(cart.data);
+    setCartData(cart.data || []);
   }, [cart]);
 
   return (

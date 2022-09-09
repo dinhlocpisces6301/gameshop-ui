@@ -12,10 +12,11 @@ import styles from './CartItem.module.scss';
 import ToastPortal from '~/components/ToastPortal';
 const cx = classNames.bind(styles);
 function CartItem({ data }) {
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const toastRef = useRef();
   const Notify = useNotification(toastRef);
-  const [loading, setLoading] = useState(false);
+
   const removeItem = async () => {
     setLoading(true);
     const response = await cartServices.removeCart({ gameId: data.gameId });
@@ -32,9 +33,11 @@ function CartItem({ data }) {
       setLoading(false);
     }
   };
+
   const handleClick = () => {
     removeItem();
   };
+
   return (
     <>
       <div className={cx('cart-item')}>
