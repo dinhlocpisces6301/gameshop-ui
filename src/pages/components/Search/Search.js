@@ -44,7 +44,6 @@ function Search() {
         setSearchResult(result.items);
         setTotalRecords(result.totalRecords);
         setShowResult(true);
-        console.log(result);
       }
     };
 

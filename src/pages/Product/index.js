@@ -14,7 +14,6 @@ function Product() {
     const fetchApi = async () => {
       const result = await productServices.getProductById(productId);
       setValue(result);
-      console.log(result);
     };
 
     fetchApi();

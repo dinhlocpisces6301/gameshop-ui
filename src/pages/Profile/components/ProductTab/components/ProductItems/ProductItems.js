@@ -5,15 +5,13 @@ import ProductItem from '../ProductItem/ProductItem';
 import styles from './ProductItems.module.scss';
 
 const cx = classNames.bind(styles);
-function ProductItems() {
+function ProductItems({ data }) {
   return (
     <>
       <div className={cx('container')}>
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
+        {data.map((item, index) => {
+          return <ProductItem data={item} key={item.gameID} />;
+        })}
       </div>
     </>
   );

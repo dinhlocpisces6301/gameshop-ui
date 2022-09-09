@@ -1,21 +1,23 @@
 import classNames from 'classnames/bind';
 import { useLayoutEffect } from 'react';
 import { useState } from 'react';
+import * as imageServices from '~/services/imageServices';
 
 import styles from './ProductGallery.module.scss';
 
 const cx = classNames.bind(styles);
-const valueApi = [
-  process.env.PUBLIC_URL + '/images/img-not-found.jpg',
-  process.env.PUBLIC_URL + '/images/img-not-found.jpg',
-  process.env.PUBLIC_URL + '/images/img-not-found.jpg',
-  process.env.PUBLIC_URL + '/images/img-not-found.jpg',
-];
 
-function ProductGallery({ data = valueApi }) {
+function ProductGallery({ data }) {
+  const Images = [
+    imageServices.getImage(data[1]),
+    imageServices.getImage(data[2]),
+    imageServices.getImage(data[3]),
+    imageServices.getImage(data[4]),
+  ];
+
   const [imgIndex, setImgIndex] = useState(0);
   //   gắn giá trị khởi tạo là bức hình đầu tiên
-  const [screenPath, setscreenPath] = useState(valueApi[0]);
+  const [screenPath, setscreenPath] = useState(Images[0]);
   useLayoutEffect(() => {
     const timerId = setInterval(nextSlide, 1000);
 
@@ -25,12 +27,12 @@ function ProductGallery({ data = valueApi }) {
   });
 
   const nextSlide = () => {
-    if (imgIndex !== valueApi.length - 1) {
+    if (imgIndex !== Images.length - 1) {
       setImgIndex(imgIndex + 1);
-      setscreenPath(valueApi[imgIndex + 1]);
-    } else if (imgIndex === valueApi.length - 1) {
+      setscreenPath(Images[imgIndex + 1]);
+    } else if (imgIndex === Images.length - 1) {
       setImgIndex(0);
-      setscreenPath(valueApi[0]);
+      setscreenPath(Images[0]);
     }
   };
   return (
@@ -40,7 +42,7 @@ function ProductGallery({ data = valueApi }) {
           <img src={screenPath} alt="" className={cx('screen-img')} />
         </div>
         <div className={cx('gallery-items')}>
-          {valueApi.map((image, index) => {
+          {Images.map((image, index) => {
             return (
               <div className={cx('gallery-item')} key={index}>
                 <img

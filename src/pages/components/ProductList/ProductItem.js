@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 // import { useState } from 'react';
-
+import * as imageServices from '~/services/imageServices';
 import styles from './ProductList.module.scss';
 // import config from '~/config';
 
@@ -13,7 +13,7 @@ function ProductItem({ data, isActive }) {
     <>
       <div className={cx('product-item')}>
         <Link to={`/product/${data.gameID}`} className={isActive ? cx('item-wrapper', 'active') : cx('item-wrapper')}>
-          <img className={cx('item-img')} alt="Game" src={process.env.PUBLIC_URL + '/images/img-not-found.jpg'} />
+          <img className={cx('item-img')} alt="Game" src={imageServices.getImage(data.listImage[0])} />
           <div className={cx('item-detail')}>
             <div className={cx('item-content')}>
               <div className={cx('item-title')}>{data.name}</div>

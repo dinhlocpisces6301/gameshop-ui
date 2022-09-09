@@ -1,12 +1,22 @@
-import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
+import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 import styles from './Sidebar.module.scss';
 import config from '~/config';
-
+import * as categoryServices from '~/services/categoryServices';
 const cx = classNames.bind(styles);
 
 function Sidebar() {
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    const fetchApi = async () => {
+      const result = await categoryServices.getCategories();
+      setCategories(result || []);
+    };
+
+    fetchApi();
+  });
   return (
     <aside className={cx('wrapper')}>
       <div className={cx('container')}>
@@ -24,9 +34,13 @@ function Sidebar() {
       </div>
       <div className={cx('container')}>
         <span>BROWSE BY GENRE</span>
-        <Link to={config.routes.home}>Free to play</Link>
-        <Link to={config.routes.home}>Easy access</Link>
-        <Link to={config.routes.home}>Action</Link>
+        {categories.map((item) => {
+          return (
+            <Link to={`/category/${item.id}`} key={item.id}>
+              {item.name}
+            </Link>
+          );
+        })}
       </div>
     </aside>
   );

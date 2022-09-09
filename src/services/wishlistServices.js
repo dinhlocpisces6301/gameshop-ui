@@ -15,7 +15,7 @@ export const getWishlist = async () => {
       return { resultObj: [], message: error.message, isSuccess: false };
     }
     console.log(error);
-    return { resultObj: [], message: error.response.data, isSuccess: false };
+    return { resultObj: [], message: error.response.data.message, isSuccess: false };
   }
 };
 
@@ -35,7 +35,7 @@ export const removeWishlist = async (id) => {
       return { resultObj: [], message: error.message, isSuccess: false };
     }
     console.log(error);
-    return { resultObj: [], message: error.response.data, isSuccess: false };
+    return { resultObj: [], message: error.response.data.message, isSuccess: false };
   }
 };
 
@@ -54,6 +54,6 @@ export const addToWishlist = async (id) => {
       return { resultObj: [], message: error.message, isSuccess: false };
     }
     console.log(error);
-    return { resultObj: [], message: error.response.data, isSuccess: false };
+    return { resultObj: [], message: error.response.data.message, isSuccess: false };
   }
 };

@@ -8,6 +8,7 @@ import { cartSelector, getCart } from '~/store/reducers/cartSlice';
 import { getWishlist, wishlistSelector } from '~/store/reducers/wishlistSlice';
 import * as cartServices from '~/services/cartServices';
 import * as wishlistServices from '~/services/wishlistServices';
+import * as imageServices from '~/services/imageServices';
 
 import ToastPortal from '~/components/ToastPortal';
 import { useNotification } from '~/hooks';
@@ -18,18 +19,17 @@ import styles from './ProductDetail.module.scss';
 const cx = classNames.bind(styles);
 
 function ProductDetail({ data }) {
-  const [value, setValue] = useState(undefined);
-  const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
   const toastRef = useRef();
   const Notify = useNotification(toastRef);
+  const [value, setValue] = useState(undefined);
   useEffect(() => {
     setValue(data);
   }, [data]);
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const addToCart = async () => {
     setLoading(true);
     const response = await cartServices.addToCart({ gameID: data.gameID });
-    console.log(response);
     if (response.isSuccess === true) {
       Notify('success', 'Add to Cart Successfully');
       const timerId = setTimeout(() => {
@@ -39,7 +39,7 @@ function ProductDetail({ data }) {
       }, 3000);
     }
     if (response.isSuccess === false) {
-      Notify('error', 'Add to Cart fail');
+      Notify('error', response.message);
       const timerId = setTimeout(() => {
         clearTimeout(timerId);
         setLoading(false);
@@ -63,7 +63,7 @@ function ProductDetail({ data }) {
       }, 3000);
     }
     if (response.isSuccess === false) {
-      Notify('error', 'Add to Wishlist fail');
+      Notify('error', response.message);
       const timerId = setTimeout(() => {
         clearTimeout(timerId);
         setLoading2(false);
@@ -73,7 +73,6 @@ function ProductDetail({ data }) {
   const handleAddToWishlist = () => {
     addToWishlist();
   };
-
   const cart = useSelector(cartSelector);
   const [cartData, setCartData] = useState([]);
   useEffect(() => {
@@ -85,6 +84,7 @@ function ProductDetail({ data }) {
   useEffect(() => {
     setWishListData(wishlist.data || []);
   }, [wishlist]);
+
   return (
     <>
       <div className={cx('wrapper')}>
@@ -92,13 +92,13 @@ function ProductDetail({ data }) {
           <>
             <div className={cx('container')}>
               <div className={cx('gallery')}>
-                <ProductGallery />
+                <ProductGallery data={value.listImage} />
               </div>
               <div className={cx('product-information')}>
                 <div className={cx('information-wrapper')}>
                   <img
                     alt="product img"
-                    src={process.env.PUBLIC_URL + '/images/img-not-found.jpg'}
+                    src={imageServices.getImage(value.listImage[0])}
                     className={cx('product-img')}
                   />
                   <h2 className={cx('product-name')}>{value.name}</h2>
@@ -124,9 +124,12 @@ function ProductDetail({ data }) {
                     <div className={cx('category-wrapper')}>
                       {value.genreName !== undefined &&
                         value.genreName.map((item, index) => {
-                          const id = value.genreIDs[index];
                           return (
-                            <Link to={`/category/${id}`} className={cx('category-item')} key={id}>
+                            <Link
+                              to={`/category/${value.genreIDs[index]}`}
+                              className={cx('category-item')}
+                              key={value.genreIDs[index]}
+                            >
                               {item}
                             </Link>
                           );

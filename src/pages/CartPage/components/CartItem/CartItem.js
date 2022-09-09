@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { useNotification } from '~/hooks';
 import { getCart } from '~/store/reducers/cartSlice';
 import * as cartServices from '~/services/cartServices';
+import * as imageServices from '~/services/imageServices';
 
 import styles from './CartItem.module.scss';
 import ToastPortal from '~/components/ToastPortal';
@@ -41,7 +42,7 @@ function CartItem({ data }) {
     <>
       <div className={cx('cart-item')}>
         <Link to={`/product/${data.gameId}`} className={cx('img')}>
-          <img src={process.env.PUBLIC_URL + '/images/img-not-found.jpg'} alt="" />
+          <img src={imageServices.getImage(data.imageList[0])} alt="" />
         </Link>
         <div className={cx('item-detail')}>
           <div className={cx('item-name')}>

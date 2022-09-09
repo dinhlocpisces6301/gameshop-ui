@@ -5,11 +5,17 @@ import rootSaga from './sagas/rootSaga';
 import userReducer from './reducers/userSlice';
 import cartReducer from './reducers/cartSlice';
 import wishlistReducer from './reducers/wishlistSlice';
+import checkoutReducer from './reducers/checkoutSlice';
 
 const sagaMiddleware = createSagaMiddleware();
 // const initialState = {};
 const store = configureStore({
-  reducer: { user: userReducer, cart: cartReducer, wishlist: wishlistReducer },
+  reducer: {
+    user: userReducer,
+    cart: cartReducer,
+    wishlist: wishlistReducer,
+    checkout: checkoutReducer,
+  },
   middleware: [sagaMiddleware],
   // preloadedState: initialState,
   devTools: process.env.NODE_ENV !== 'production',

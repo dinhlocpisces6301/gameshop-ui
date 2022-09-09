@@ -16,7 +16,7 @@ export const getCart = async () => {
       return { resultObj: [], message: error.message, isSuccess: false };
     }
     console.log(error);
-    return { resultObj: [], message: error.response.data, isSuccess: false };
+    return { resultObj: [], message: error.response.data.message, isSuccess: false };
   }
 };
 
@@ -36,7 +36,7 @@ export const removeCart = async (id) => {
       return { resultObj: [], message: error.message, isSuccess: false };
     }
     console.log(error);
-    return { resultObj: [], message: error.response.data, isSuccess: false };
+    return { resultObj: [], message: error.response.data.message, isSuccess: false };
   }
 };
 
@@ -55,6 +55,6 @@ export const addToCart = async (id) => {
       return { resultObj: [], message: error.message, isSuccess: false };
     }
     console.log(error);
-    return { resultObj: [], message: error.response.data, isSuccess: false };
+    return { resultObj: [], message: error.response.data.message, isSuccess: false };
   }
 };

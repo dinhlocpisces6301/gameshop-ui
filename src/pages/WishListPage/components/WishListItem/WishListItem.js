@@ -11,6 +11,8 @@ import { getCart, cartSelector } from '~/store/reducers/cartSlice';
 import { getWishlist } from '~/store/reducers/wishlistSlice';
 import * as wishlistServices from '~/services/wishlistServices';
 import * as cartServices from '~/services/cartServices';
+import * as imageServices from '~/services/imageServices';
+
 import { useNotification } from '~/hooks';
 import ToastPortal from '~/components/ToastPortal';
 
@@ -60,7 +62,6 @@ function WishListItem({ isAdded = false, data }) {
       }, 3000);
     }
   };
-
   const handleAddToCart = () => {
     addToCart();
   };
@@ -72,7 +73,7 @@ function WishListItem({ isAdded = false, data }) {
     <>
       <div className={cx('cart-item')}>
         <Link to={`/product/${data.gameID}`} className={cx('img')}>
-          <img src={process.env.PUBLIC_URL + '/images/img-not-found.jpg'} alt="" />
+          <img src={imageServices.getImage(data.imageList[0])} alt="" />
         </Link>
         <div className={cx('item-detail')}>
           <div className={cx('item-information')}>
@@ -82,15 +83,17 @@ function WishListItem({ isAdded = false, data }) {
             <div className={cx('item-rating')}>OVERALL REVIEWS: VERY POSITIVE</div>
             <div className={cx('item-release-date')}>RELEASE DATE:</div>
             <div className={cx('category-items')}>
-              <Link to={'/category/1'} className={cx('category-item')}>
-                Action
-              </Link>
-              <Link to={'/category/2'} className={cx('category-item')}>
-                Open World
-              </Link>
-              <Link to={'/category/3'} className={cx('category-item')}>
-                Fight
-              </Link>
+              {data.genreName.map((item, index) => {
+                return (
+                  <Link
+                    to={`/category/${data.genreIds[index]}`}
+                    className={cx('category-item')}
+                    key={data.genreIds[index]}
+                  >
+                    {item}
+                  </Link>
+                );
+              })}
             </div>
           </div>
           <div className={cx('item-price')}>

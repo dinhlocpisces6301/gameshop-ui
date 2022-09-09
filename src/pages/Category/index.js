@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom';
 import StoreNav from '~/pages/components/StoreNav';
 import ProductList from '../components/ProductList';
 import * as productServices from '~/services/productServices';
+import * as categoryServices from '~/services/categoryServices';
+import CategoryItems from './component/CategoryItems';
 
 function Category() {
   document.title = 'Category';
@@ -21,11 +23,22 @@ function Category() {
     }
   });
 
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    const fetchApi = async () => {
+      const result = await categoryServices.getCategories();
+      setCategories(result);
+    };
+
+    fetchApi();
+  });
   return (
     <>
       <StoreNav />
       {(genre === undefined && page === undefined) || (genre === 'undefined' && page === 'undefined') ? (
-        <></>
+        <>
+          <CategoryItems data={categories} />;
+        </>
       ) : (
         <ProductList pagination={true} typePage={'category'} title={title} />
       )}

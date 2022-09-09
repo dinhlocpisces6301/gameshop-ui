@@ -14,6 +14,7 @@ import { useClickOutside } from '~/hooks';
 import { getUserData, userSelector } from '~/store/reducers/userSlice';
 import { getCart, cartSelector } from '~/store/reducers/cartSlice';
 import { getWishlist, wishlistSelector } from '~/store/reducers/wishlistSlice';
+import { getCheckout } from '~/store/reducers/checkoutSlice';
 import * as authServices from '~/services/authServices';
 
 import styles from './Header.module.scss';
@@ -30,6 +31,7 @@ function Header() {
     dispatch(getUserData());
     dispatch(getCart());
     dispatch(getWishlist());
+    dispatch(getCheckout());
   }, [dispatch]);
 
   const userInfo = useSelector(userSelector);
