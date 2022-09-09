@@ -11,8 +11,7 @@ export const login = async (user) => {
     if (error.code === 'ERR_NETWORK') {
       return { message: error.message, isSuccess: false };
     }
-    console.log(error);
-    return { message: error.response.data, isSuccess: false };
+    return { message: error.response.data.message, isSuccess: false };
   }
 };
 

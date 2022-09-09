@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
 import { httpRequest } from '~/utils';
+
 export const getCart = async () => {
   try {
     const jwt_token = Cookies.get('jwt');
@@ -12,10 +13,10 @@ export const getCart = async () => {
     return res;
   } catch (error) {
     if (error.code === 'ERR_NETWORK') {
-      return { message: error.message, isSuccess: false };
+      return { resultObj: [], message: error.message, isSuccess: false };
     }
     console.log(error);
-    return { message: error.response.data, isSuccess: false };
+    return { resultObj: [], message: error.response.data, isSuccess: false };
   }
 };
 
@@ -32,10 +33,10 @@ export const removeCart = async (id) => {
     return res.data;
   } catch (error) {
     if (error.code === 'ERR_NETWORK') {
-      return { message: error.message, isSuccess: false };
+      return { resultObj: [], message: error.message, isSuccess: false };
     }
     console.log(error);
-    return { message: error.response.data, isSuccess: false };
+    return { resultObj: [], message: error.response.data, isSuccess: false };
   }
 };
 
@@ -51,9 +52,9 @@ export const addToCart = async (id) => {
     return res.data;
   } catch (error) {
     if (error.code === 'ERR_NETWORK') {
-      return { message: error.message, isSuccess: false };
+      return { resultObj: [], message: error.message, isSuccess: false };
     }
     console.log(error);
-    return { message: error.response.data, isSuccess: false };
+    return { resultObj: [], message: error.response.data, isSuccess: false };
   }
 };

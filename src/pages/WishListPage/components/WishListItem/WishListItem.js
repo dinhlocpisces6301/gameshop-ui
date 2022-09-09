@@ -24,13 +24,11 @@ function WishListItem({ isAdded = false, data }) {
   useEffect(() => {
     setCartData(cart.data || []);
   }, [cart]);
-
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const removeItem = async () => {
     setLoading(true);
     const response = await wishlistServices.removeWishlist({ gameID: data.gameID });
-    console.log(response);
     if (response.isSuccess === true) {
       Notify('success', 'Removed Successfully');
       const timerId = setTimeout(() => {
@@ -47,7 +45,6 @@ function WishListItem({ isAdded = false, data }) {
   const addToCart = async () => {
     setLoading(true);
     const response = await cartServices.addToCart({ gameID: data.gameID });
-    console.log(response);
     if (response.isSuccess === true) {
       Notify('success', 'Removed Successfully');
       const timerId = setTimeout(() => {
@@ -116,7 +113,7 @@ function WishListItem({ isAdded = false, data }) {
               </Button>
             )}
             <div className={cx('addon')}>
-              Added on {new Date(new Date().getTime()).toLocaleDateString(undefined)} ({' '}
+              Added on {new Date(data.addedDate).toLocaleDateString(undefined)} ({' '}
               <span className={cx('remove')} onClick={handleClick}>
                 Remove
               </span>{' '}

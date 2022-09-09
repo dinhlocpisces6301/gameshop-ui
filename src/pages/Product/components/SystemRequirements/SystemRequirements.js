@@ -1,10 +1,19 @@
 import classNames from 'classnames/bind';
+import { useEffect, useState } from 'react';
 
 import styles from './SystemRequirements.module.scss';
 
 const cx = classNames.bind(styles);
-function SystemRequirements() {
-  return (
+function SystemRequirements({ data }) {
+  const [value, setValue] = useState(undefined);
+
+  useEffect(() => {
+    setValue(data);
+  }, [data]);
+
+  return value === undefined ? (
+    <></>
+  ) : (
     <>
       <div className={cx('wrapper')}>
         <h2 className={cx('header-title')}>System Requirements</h2>
@@ -14,28 +23,24 @@ function SystemRequirements() {
               <li>
                 <h2 className={cx('title')}>Minimum:</h2>
               </li>
-              <li>{`Requires a 64-bit processor and operating system`}</li>
+              <li>{value.srm.additionalNotes}</li>
               <li>
-                <strong>OS:</strong>{' '}
-                {`Windows 10 64 Bit, Windows 8.1 64 Bit, Windows 8 64 Bit, Windows 7 64 Bit Service
-                Pack 1`}
+                <strong>OS:</strong> {value.srm.os}
               </li>
               <li>
-                <strong>Processor:</strong>{' '}
-                {`Intel Core 2 Quad CPU Q6600 @ 2.40GHz (4 CPUs) / AMD Phenom 9850 Quad-Core
-                Processor (4 CPUs) @ 2.5GHz`}
+                <strong>Processor:</strong> {value.srm.processor}
               </li>
               <li>
-                <strong>Memory:</strong> {`4 GB RAM`}
+                <strong>Memory:</strong> {value.srm.memory}
               </li>
               <li>
-                <strong>Graphics:</strong> {`NVIDIA 9800 GT 1GB / AMD HD 4870 1GB (DX 10, 10.1, 11)`}
+                <strong>Graphics:</strong> {value.srm.graphics}
               </li>
               <li>
-                <strong>Storage:</strong> {`72 GB available space`}
+                <strong>Storage:</strong> {value.srm.storage}
               </li>
               <li>
-                <strong>Sound Card:</strong> {`100% DirectX 10 compatible`}
+                <strong>Sound Card:</strong> {value.srm.soundcard}
               </li>
             </ul>
           </div>
@@ -44,26 +49,24 @@ function SystemRequirements() {
               <li>
                 <h2 className={cx('title')}>Recommended:</h2>
               </li>
-              <li>{`Requires a 64-bit processor and operating system`}</li>
+              <li>{value.srr.additionalNotes}</li>
               <li>
-                <strong>OS:</strong>{' '}
-                {`Windows 10 64 Bit, Windows 8.1 64 Bit, Windows 8 64 Bit, Windows 7 64 Bit Service
-                Pack 1`}
+                <strong>OS:</strong> {value.srr.os}
               </li>
               <li>
-                <strong>Processor:</strong> {` Intel Core i5 3470 @ 3.2GHz (4 CPUs) / AMD X8 FX-8350 @ 4GHz (8 CPUs)`}
+                <strong>Processor:</strong> {value.srr.processor}
               </li>
               <li>
-                <strong>Memory:</strong> {`8 GB RAM`}
+                <strong>Memory:</strong> {value.srr.memory}
               </li>
               <li>
-                <strong>Graphics:</strong> {`NVIDIA GTX 660 2GB / AMD HD 7870 2GB`}
+                <strong>Graphics:</strong> {value.srr.graphics}
               </li>
               <li>
-                <strong>Storage:</strong> {`72 GB available space`}
+                <strong>Storage:</strong> {value.srr.storage}
               </li>
               <li>
-                <strong>Sound Card:</strong> {`100% DirectX 10 compatible`}
+                <strong>Sound Card:</strong> {value.srr.soundcard}
               </li>
             </ul>
           </div>

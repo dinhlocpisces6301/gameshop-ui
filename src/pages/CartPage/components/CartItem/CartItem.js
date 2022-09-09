@@ -20,7 +20,6 @@ function CartItem({ data }) {
   const removeItem = async () => {
     setLoading(true);
     const response = await cartServices.removeCart({ gameId: data.gameId });
-    console.log(response);
     if (response.isSuccess === true) {
       Notify('success', 'Removed Successfully');
       const timerId = setTimeout(() => {

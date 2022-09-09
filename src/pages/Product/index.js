@@ -23,7 +23,7 @@ function Product() {
     <>
       <StoreNav />
       <ProductDetail data={value} />
-      <SystemRequirements />
+      <SystemRequirements data={value} />
     </>
   );
 }

@@ -12,10 +12,10 @@ export const getWishlist = async () => {
     return res;
   } catch (error) {
     if (error.code === 'ERR_NETWORK') {
-      return { message: error.message, isSuccess: false };
+      return { resultObj: [], message: error.message, isSuccess: false };
     }
     console.log(error);
-    return { message: error.response.data, isSuccess: false };
+    return { resultObj: [], message: error.response.data, isSuccess: false };
   }
 };
 
@@ -32,10 +32,10 @@ export const removeWishlist = async (id) => {
     return res.data;
   } catch (error) {
     if (error.code === 'ERR_NETWORK') {
-      return { message: error.message, isSuccess: false };
+      return { resultObj: [], message: error.message, isSuccess: false };
     }
     console.log(error);
-    return { message: error.response.data, isSuccess: false };
+    return { resultObj: [], message: error.response.data, isSuccess: false };
   }
 };
 
@@ -51,9 +51,9 @@ export const addToWishlist = async (id) => {
     return res.data;
   } catch (error) {
     if (error.code === 'ERR_NETWORK') {
-      return { message: error.message, isSuccess: false };
+      return { resultObj: [], message: error.message, isSuccess: false };
     }
     console.log(error);
-    return { message: error.response.data, isSuccess: false };
+    return { resultObj: [], message: error.response.data, isSuccess: false };
   }
 };

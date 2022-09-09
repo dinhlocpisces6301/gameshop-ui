@@ -26,7 +26,6 @@ function ProductDetail({ data }) {
   useEffect(() => {
     setValue(data);
   }, [data]);
-
   const addToCart = async () => {
     setLoading(true);
     const response = await cartServices.addToCart({ gameID: data.gameID });
@@ -55,7 +54,6 @@ function ProductDetail({ data }) {
   const addToWishlist = async () => {
     setLoading2(true);
     const response = await wishlistServices.addToWishlist({ gameID: data.gameID });
-    console.log(response);
     if (response.isSuccess === true) {
       Notify('success', 'Add to Wishlist Successfully');
       const timerId = setTimeout(() => {
