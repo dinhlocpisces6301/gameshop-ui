@@ -62,9 +62,43 @@
   }
 }
 
+.loading {
+  align-self: center;
+  width: 16rem;
+  height: 3.6rem;
+  background-color: #1a4490;
+  color: var(--white);
+  font-size: 1.6rem;
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    display: block;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    border-top: 3px solid var(--black);
+    border-right: 3px solid var(--black);
+
+    animation: spinner 1s linear infinite;
+  }
+}
+
 .link {
   align-self: center;
   color: var(--white);
   font-size: 1.4rem;
   margin-top: 2rem;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

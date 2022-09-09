@@ -1,20 +1,54 @@
 import classNames from 'classnames/bind';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 import ProductGallery from '../ProductGallery';
+import { cartSelector, getCart } from '~/store/reducers/cartSlice';
+import * as cartServices from '~/services/cartServices';
+import ToastPortal from '~/components/ToastPortal';
+import { useNotification } from '~/hooks';
+
+import config from '~/config';
 
 import styles from './ProductDetail.module.scss';
-
 const cx = classNames.bind(styles);
 
 function ProductDetail({ data }) {
   const [value, setValue] = useState(undefined);
-
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const toastRef = useRef();
+  const Notify = useNotification(toastRef);
   useEffect(() => {
     setValue(data);
   }, [data]);
-  console.log(value);
 
+  const addToCart = async () => {
+    setLoading(true);
+    const response = await cartServices.addToCart({ gameID: data.gameID });
+    console.log(response);
+    if (response.isSuccess === true) {
+      Notify('success', 'Removed Successfully');
+      const timerId = setTimeout(() => {
+        clearTimeout(timerId);
+        dispatch(getCart());
+      }, 3000);
+    }
+    if (response.isSuccess === false) {
+      Notify('error', 'Add to cart Fail');
+      setLoading(false);
+    }
+  };
+  const handleClick = () => {
+    addToCart();
+  };
+
+  const cart = useSelector(cartSelector);
+  const [cartData, setCartData] = useState([]);
+  useEffect(() => {
+    setCartData(cart.data);
+  }, [cart]);
   return (
     <>
       <div className={cx('wrapper')}>
@@ -71,9 +105,23 @@ function ProductDetail({ data }) {
                 <button className={cx('wishlish-button')}>Add to your WishList</button>
               </div>
               <div className={cx('cart-section')}>
-                <span className={cx('origin-price')}>{value.price}</span>
+                {value.discount !== 0 && <span className={cx('origin-price')}>{value.price}</span>}
                 <span className={cx('discount-price')}>{(value.price * (1 - value.discount / 100)).toString()}</span>
-                <button className={cx('cart-button')}>Add to Cart</button>
+                {cartData.find((element) => element.gameId === value.gameID) === undefined ? (
+                  loading ? (
+                    <div className={cx('loading')}>
+                      <span></span>
+                    </div>
+                  ) : (
+                    <button className={cx('loading')} onClick={handleClick}>
+                      Add to Cart
+                    </button>
+                  )
+                ) : (
+                  <Link to={config.routes.cart} className={cx('view-cart-button')}>
+                    View Cart
+                  </Link>
+                )}
               </div>
             </div>
           </>
@@ -85,6 +133,7 @@ function ProductDetail({ data }) {
           </>
         )}
       </div>
+      <ToastPortal ref={toastRef} autoClose={true} />
     </>
   );
 }

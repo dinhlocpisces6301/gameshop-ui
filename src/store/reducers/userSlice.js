@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const name = 'user';
 
 const initialState = {
-  nickname: undefined,
+  data: undefined,
   loaded: false,
   error: false,
 };
@@ -12,15 +12,16 @@ const userSlice = createSlice({
   name,
   initialState,
   reducers: {
-    getInfo: (state) => {},
-    getInfoSuccess: (state, action) => {
-      state.nickname = action.payload;
+    getUserData: (state) => {},
+    getUserDataSuccess: (state, action) => {
+      state.data = action.payload.resultObj;
       state.loaded = true;
     },
+    getUserDataFail: (state, action) => {},
   },
 });
 
-export const { getInfo, getInfoSuccess } = userSlice.actions;
+export const { getUserData, getUserDataSuccess, getUserDataFail } = userSlice.actions;
 
 export default userSlice.reducer;
 

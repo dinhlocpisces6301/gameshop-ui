@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
-import { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useRef, useEffect, useLayoutEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import classNames from 'classnames/bind';
@@ -11,24 +11,46 @@ import Button from '~/components/Button';
 import Dropdown from '~/components/Dropdown';
 import { navItems } from './NavItems.js';
 import { useClickOutside } from '~/hooks';
-import { getInfo, userSelector } from '~/store/reducers/userSlice';
+import { getUserData, userSelector } from '~/store/reducers/userSlice';
+import { getCart, cartSelector } from '~/store/reducers/cartSlice';
 import * as authServices from '~/services/authServices';
 
 import styles from './Header.module.scss';
 const cx = classNames.bind(styles);
 
 function Header() {
-  const dispatch = useDispatch();
-  const userInfo = useSelector(userSelector);
-
   const [storeDropdown, setStoreDropdown] = useState(false);
   const [communityDropdown, setCommunityDropdown] = useState(false);
   const [actionDropdown, setActionState] = useState(false);
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const userInfo = useSelector(userSelector);
+  const [userName, setUserName] = useState(undefined);
+
   useEffect(() => {
-    dispatch(getInfo());
+    dispatch(getUserData());
   }, [dispatch]);
 
+  useLayoutEffect(() => {
+    if (userInfo.data !== undefined) {
+      setUserName(userInfo.data.userName);
+    }
+  }, [userInfo]);
+
+  const cart = useSelector(cartSelector);
+  const [cartData, setCartData] = useState([0]);
+  useEffect(() => {
+    dispatch(getCart());
+  }, [dispatch]);
+
+  useLayoutEffect(() => {
+    setCartData(cart.data);
+  }, [cart]);
+  const [wishlistData, setWishlistData] = useState([0]);
+  useLayoutEffect(() => {
+    setWishlistData(cart.data || []);
+  }, [cart]);
   const handleClick = () => {
     setActionState(!actionDropdown);
   };
@@ -78,13 +100,19 @@ function Header() {
     {
       id: 1,
       title: 'View Profile',
-      path: `/profile/${userInfo.nickname}`,
+      path: `/profile/${userName}`,
     },
     {
       id: 2,
       title: 'Logout',
       path: '#',
-      action: authServices.logout,
+      action: () => {
+        const timerId = setTimeout(() => {
+          clearTimeout(timerId);
+          authServices.logout();
+          navigate(config.routes.login, { replace: true });
+        }, 2000);
+      },
     },
   ];
 
@@ -105,24 +133,24 @@ function Header() {
             <>
               <div className={cx('action-menu')}>
                 <Button wishlist to={config.routes.wishlist} className={cx('action-menu-button')}>
-                  WISHLIST (0)
+                  {`WISHLIST (${wishlistData.length})`}
                 </Button>
                 <Button cart to={config.routes.cart} className={cx('action-menu-button')}>
-                  CART (0)
+                  {`CART (${cartData.length})`}
                 </Button>
               </div>
               <div className={cx('action-menu')} ref={ActionMenuRef}>
                 <div className={cx('user-info')}>
                   <div className={cx('user-name')}>
                     <Link to="#" onClick={handleClick}>
-                      {userInfo.nickname || '{name}'}
+                      {userName || '{name}'}
                       &nbsp;
                       <FontAwesomeIcon icon={faCaretDown} />
                     </Link>
                     {actionDropdown && <Dropdown items={ActionMenuItems} actionMenu />}
                   </div>
                   <Link to="" className={cx('avatar')}>
-                    <img alt="avatar" src={process.env.PUBLIC_URL + `/Images/avatar.jpg`} />
+                    <img alt="avatar" src={process.env.PUBLIC_URL + `/Images/avatar-placeholder.jpg`} />
                   </Link>
                 </div>
               </div>

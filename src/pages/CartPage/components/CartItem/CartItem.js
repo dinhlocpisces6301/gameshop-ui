@@ -1,29 +1,61 @@
 //import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
+import { useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import styles from './CartItem.module.scss';
+import { useNotification } from '~/hooks';
+import { getCart } from '~/store/reducers/cartSlice';
+import * as cartServices from '~/services/cartServices';
 
+import styles from './CartItem.module.scss';
+import ToastPortal from '~/components/ToastPortal';
 const cx = classNames.bind(styles);
-function CartItem() {
+function CartItem({ data }) {
+  const dispatch = useDispatch();
+  const toastRef = useRef();
+  const Notify = useNotification(toastRef);
+  const [loading, setLoading] = useState(false);
+  const removeItem = async () => {
+    setLoading(true);
+    const response = await cartServices.removeCart({ gameId: data.gameId });
+    console.log(response);
+    if (response.isSuccess === true) {
+      Notify('success', 'Removed Successfully');
+      const timerId = setTimeout(() => {
+        clearTimeout(timerId);
+        dispatch(getCart());
+      }, 2000);
+    }
+    if (response.isSuccess === false) {
+      Notify('error', 'Removed Fail');
+      setLoading(false);
+    }
+  };
+  const handleClick = () => {
+    removeItem();
+  };
   return (
     <>
       <div className={cx('cart-item')}>
-        <Link to={'/product/id'} className={cx('img')}>
+        <Link to={`/product/${data.gameId}`} className={cx('img')}>
           <img src={process.env.PUBLIC_URL + '/images/img-not-found.jpg'} alt="" />
         </Link>
         <div className={cx('item-detail')}>
           <div className={cx('item-name')}>
             <h2 className={cx('name')}>
-              <Link to={'/product/id'}>Grand Theft Auto V</Link>
+              <Link to={`/product/${data.gameId}`}>{data.name}</Link>
             </h2>
           </div>
           <div className={cx('item-price')}>
-            <span className={cx('price')}>180.000đ</span>
-            <span className={cx('remove')}>Remove</span>
+            <span className={cx('price')}>{data.price}</span>
+            <span className={cx('remove')} onClick={handleClick}>
+              {loading ? '' : 'Remove'}
+            </span>
           </div>
         </div>
       </div>
+      <ToastPortal ref={toastRef} autoClose={true} />
     </>
   );
 }

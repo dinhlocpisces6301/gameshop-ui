@@ -59,7 +59,6 @@ function ProductList({ data, pagination = false, typePage = '', title = 'List Pr
   };
 
   useEffect(() => {
-    console.log(totalPages);
     if (_page < 1 || _page > totalPages) {
       navigate(config.routes.notFound, { replace: true });
     }
