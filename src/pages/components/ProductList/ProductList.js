@@ -12,7 +12,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import config from '~/config';
 const cx = classNames.bind(styles);
 
-function ProductList({ data, pagination = false, typePage = '', title = 'List Product' }) {
+function ProductList({ pagination = false, typePage = '', title = 'List Product' }) {
   const navigate = useNavigate();
 
   const { genre, keyword, page } = useParams();

@@ -21,7 +21,7 @@ const cx = classNames.bind(styles);
 function ProductDetail({ data }) {
   const toastRef = useRef();
   const Notify = useNotification(toastRef);
-  const [value, setValue] = useState(undefined);
+  const [value, setValue] = useState(data);
   useEffect(() => {
     setValue(data);
   }, [data]);

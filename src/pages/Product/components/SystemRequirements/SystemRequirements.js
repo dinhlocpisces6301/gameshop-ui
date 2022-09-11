@@ -5,7 +5,7 @@ import styles from './SystemRequirements.module.scss';
 
 const cx = classNames.bind(styles);
 function SystemRequirements({ data }) {
-  const [value, setValue] = useState(undefined);
+  const [value, setValue] = useState(data);
 
   useEffect(() => {
     setValue(data);

@@ -20,7 +20,7 @@ function ProductItem({ data, isActive }) {
               <div className={cx('item-category')}>{data.genreName.join(', ')}</div>
             </div>
             <div className={cx('discount-prices')}>
-              <div className={cx('discount-orginal-price')}>{data.price}</div>
+              {data.discount > 0 && <div className={cx('discount-orginal-price')}>{data.price}</div>}
               <div className={cx('discount-final-price')}>{data.price * (1 - data.discount / 100)}</div>
             </div>
           </div>

@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import { httpRequest } from '~/utils';
 
 export const getUserData = async (id) => {
@@ -24,7 +25,12 @@ export const editProfile = async (account) => {
 
 export const changePassword = async (account) => {
   try {
-    const res = await httpRequest.post('Users/changepassword', account);
+    const jwt_token = Cookies.get('jwt');
+    const res = await httpRequest.post('Users/changepassword', account, {
+      headers: {
+        Authorization: `Bearer ${jwt_token}`,
+      },
+    });
     return res.data;
   } catch (error) {
     if (error.code === 'ERR_NETWORK') {

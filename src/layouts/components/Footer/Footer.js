@@ -26,33 +26,36 @@ function Footer() {
               <Link to={config.routes.home}>Home</Link>
             </li>
             <li>
-              <Link to={config.routes.home}>Privacy Policy </Link>
+              <Link to={'#'}>Community</Link>
             </li>
             <li>
-              <Link to={config.routes.home}>Legal</Link>
+              <Link to={config.routes.about}>About</Link>
             </li>
             <li>
-              <Link to={config.routes.home}>Support</Link>
-            </li>
-          </ul>
-        </div>
-        <div className={cx('footer-content')}>
-          <ul>
-            <li>
-              <p>Chúng tôi bán game lậu</p>
-            </li>
-            <li>
-              <p>Chúng tôi bán game crack</p>
-            </li>
-            <li>
-              <p>Chúng tôi crack game chứ không mua</p>
+              <Link to={config.routes.contact}>Contact</Link>
             </li>
           </ul>
         </div>
         <div className={cx('footer-content')}>
           <ul>
             <li>
-              <p>Email: gamestore@gmail.com</p>
+              <p>We always provide the best services</p>
+            </li>
+            <li>
+              <br />
+            </li>
+            <li>
+              <p>STEM isn't a Website, it's a Store.</p>
+            </li>
+            <li>
+              <p>By Geniuses for Geniuses</p>
+            </li>
+          </ul>
+        </div>
+        <div className={cx('footer-content')}>
+          <ul>
+            <li>
+              <p>Email: stem.store@gmail.com</p>
             </li>
             <li>
               <p>Phone/Fax: 18001050</p>

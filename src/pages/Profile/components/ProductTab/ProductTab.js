@@ -20,7 +20,6 @@ function ProductTab() {
   useLayoutEffect(() => {
     setCheckoutData(checkout.data || []);
   }, [checkout]);
-  console.log(checkoutData);
   return (
     <>
       <div className={cx('wrapper')}>

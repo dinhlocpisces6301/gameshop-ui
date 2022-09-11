@@ -16,6 +16,7 @@ import { getCart, cartSelector } from '~/store/reducers/cartSlice';
 import { getWishlist, wishlistSelector } from '~/store/reducers/wishlistSlice';
 import { getCheckout } from '~/store/reducers/checkoutSlice';
 import * as authServices from '~/services/authServices';
+import * as imageServices from '~/services/imageServices';
 
 import styles from './Header.module.scss';
 const cx = classNames.bind(styles);
@@ -34,13 +35,16 @@ function Header() {
     dispatch(getCheckout());
   }, [dispatch]);
 
-  const userInfo = useSelector(userSelector);
+  const user = useSelector(userSelector);
   const [userName, setUserName] = useState(undefined);
+  const [avatar, setAvatar] = useState(undefined);
+
   useLayoutEffect(() => {
-    if (userInfo.data !== undefined) {
-      setUserName(userInfo.data.userName);
+    if (user.data !== undefined) {
+      setUserName(user.data.userName);
+      setAvatar(user.data.avatarPath);
     }
-  }, [userInfo]);
+  }, [user]);
 
   const cart = useSelector(cartSelector);
   const [cartData, setCartData] = useState([]);
@@ -153,7 +157,7 @@ function Header() {
                     {actionDropdown && <Dropdown items={ActionMenuItems} actionMenu />}
                   </div>
                   <Link to="" className={cx('avatar')}>
-                    <img alt="avatar" src={process.env.PUBLIC_URL + `/Images/avatar-placeholder.jpg`} />
+                    <img alt="avatar" src={imageServices.getImage(avatar)} />
                   </Link>
                 </div>
               </div>

@@ -9,6 +9,7 @@
 .wallpaper {
   width: 100%;
   height: 40rem;
+  position: relative;
 }
 
 .wallpaper-img {
@@ -20,9 +21,9 @@
 }
 
 .wallpaper-button {
-  position: relative;
-  left: 1050px;
-  bottom: 50px;
+  position: absolute;
+  right: 3rem;
+  bottom: 3rem;
   padding: 0.5rem 1rem;
   border-radius: 4px;
   font-size: 1.4rem;
@@ -77,6 +78,8 @@
 }
 
 .user-name {
+  display: block;
+  height: 4.5rem;
   font-size: 3rem;
   color: var(--white);
   font-weight: 500;
@@ -88,20 +91,25 @@
 }
 
 .user-fullname {
+  display: block;
+  height: 2.4rem;
   font-size: 1.6rem;
   color: var(--white);
   font-weight: 500;
   margin: 0;
 }
 
+.edit-button,
+.cancel-button {
+  position: absolute;
+  bottom: 3rem;
+  right: 3rem;
+}
+
 .edit-button {
   padding: 0.5rem 1rem;
   border-radius: 4px;
   font-size: 1.4rem;
-
-  position: relative;
-  bottom: 4rem;
-  left: 80rem;
 
   .icon {
     margin-right: 8px;
@@ -114,11 +122,12 @@
   font-size: 1.4rem;
   background-color: var(--primary);
 
-  position: relative;
-  bottom: 4rem;
-  left: 80rem;
-
   .icon {
     margin-right: 8px;
   }
+}
+
+input[type='file'] {
+  width: 7.5rem;
+  margin-left: 5px;
 }
