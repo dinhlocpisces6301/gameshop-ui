@@ -16,7 +16,7 @@ function Sidebar() {
     };
 
     fetchApi();
-  });
+  }, []);
   return (
     <aside className={cx('wrapper')}>
       {/* <div className={cx('container')}>

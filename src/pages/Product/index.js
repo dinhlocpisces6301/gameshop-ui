@@ -18,6 +18,7 @@ function Product() {
 
     fetchApi();
   }, [productId]);
+
   return (
     <>
       <StoreNav />

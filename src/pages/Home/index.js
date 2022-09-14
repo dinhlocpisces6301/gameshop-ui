@@ -11,7 +11,7 @@ function Home() {
     <>
       <StoreNav />
       <Slider />
-      <ProductList />
+      <ProductList pagination={true} typePage={'products'} title={'All Product'} />
     </>
   );
 }

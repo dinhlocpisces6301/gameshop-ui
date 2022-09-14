@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 
 import StoreNav from '~/pages/components/StoreNav';
 import ProductList from '../components/ProductList';
-import * as productServices from '~/services/productServices';
 import * as categoryServices from '~/services/categoryServices';
 import CategoryItems from './component/CategoryItems';
 
@@ -14,14 +13,14 @@ function Category() {
 
   useEffect(() => {
     const fetchApi = async () => {
-      const result = await productServices.getCategoryById(genre);
-      setTitle(`Page ${page || 1} --- ${result.name}`);
+      const result = await categoryServices.getCategoryById(genre);
+      setTitle(`Page ${page || 1} - Genre: ${result.name}`);
     };
 
     if (genre !== undefined && genre !== 'undefined') {
       fetchApi();
     }
-  });
+  }, [genre, page]);
 
   const [categories, setCategories] = useState([]);
   useEffect(() => {
@@ -29,9 +28,9 @@ function Category() {
       const result = await categoryServices.getCategories();
       setCategories(result);
     };
-
     fetchApi();
-  });
+  }, []);
+
   return (
     <>
       <StoreNav />

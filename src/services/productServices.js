@@ -1,8 +1,8 @@
 import { httpRequest } from '~/utils';
 
-export const getProductList = async () => {
+export const getAllProduct = async (page, size = 10) => {
   try {
-    const res = await httpRequest.get('games');
+    const res = await httpRequest.get(`games/paging?pageindex=${page}&pagesize=${size}`);
     return res;
   } catch (error) {
     console.log(error);
@@ -39,24 +39,6 @@ export const getProductsByGenreId = async (q, page, size = 10) => {
 export const getProductById = async (id) => {
   try {
     const res = await httpRequest.get(`games/${id}`);
-    return res;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getCategories = async () => {
-  try {
-    const res = await httpRequest.get(`categories`);
-    return res;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getCategoryById = async (id) => {
-  try {
-    const res = await httpRequest.get(`categories/${id}`);
     return res;
   } catch (error) {
     console.log(error);

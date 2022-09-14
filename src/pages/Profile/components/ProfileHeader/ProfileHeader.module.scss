@@ -15,7 +15,7 @@
 .wallpaper-img {
   width: 100%;
   height: 100%;
-
+  object-fit: cover;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }

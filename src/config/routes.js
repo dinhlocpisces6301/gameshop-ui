@@ -1,7 +1,6 @@
 const routes = {
   notFound: '*',
   home: '/',
-  product: '/product/:productId',
   contact: '/contact',
   profile: '/profile/:nickname',
   login: '/login',
@@ -11,12 +10,17 @@ const routes = {
   wishlist: '/wishlist',
   about: '/about',
   checkout: '/checkout',
+  product: '/product/:productId',
+  products: '/products',
+  allProduct: '/products/q=:keyword',
+  allProductWithDefaultPagination: '/products/q=:keyword/page=',
+  allProductWithPagination: '/products/q=:keyword/page=:page',
   category: '/category',
   categoryWithGenre: '/category/:genre',
-  categoryWithPaginationDefault: '/category/:genre/page=',
+  categoryWithDefaultPagination: '/category/:genre/page=',
   categoryWithPagination: '/category/:genre/page=:page',
   search: '/search/q=:keyword',
-  searchWithPaginationDefault: '/search/q=:keyword/page=',
+  searchWithDefaultPagination: '/search/q=:keyword/page=',
   searchWithPagination: '/search/q=:keyword/page=:page',
 };
 

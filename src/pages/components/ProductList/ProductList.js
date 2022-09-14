@@ -21,17 +21,31 @@ function ProductList({ pagination = false, typePage = '', title = 'List Product'
   const [reviewValue, setReviewValue] = useState({});
   const [value, setValue] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [totalPages, setTotalPages] = useState(1);
+  const [totalPages, setTotalPages] = useState(1000);
 
   useEffect(() => {
     const fetchApi = async () => {
       var result;
-      if (typePage === 'search') {
-        result = await productServices.getProductsByKeyword(keyword, page || 1);
-      } else if (typePage === 'category') {
-        result = await productServices.getProductsByGenreId(genre, page || 1);
-      } else {
-        result = await productServices.getProductsByGenreId('', page || 1);
+      switch (typePage) {
+        case 'search': {
+          result = await productServices.getProductsByKeyword(keyword, page || 1);
+          break;
+        }
+        case 'category': {
+          result = await productServices.getProductsByGenreId(genre, page || 1);
+          break;
+        }
+        case 'products': {
+          if (keyword === 'latest') {
+            result = await productServices.getAllProduct(page || 1);
+          } else {
+            result = await productServices.getAllProduct(page || 1);
+          }
+          break;
+        }
+        default: {
+          return;
+        }
       }
       setReviewValue(result.items[0]);
       setValue(result.items);
@@ -42,26 +56,30 @@ function ProductList({ pagination = false, typePage = '', title = 'List Product'
     fetchApi();
   }, [genre, keyword, page, typePage]);
 
-  var _page = parseInt(page);
+  var _page = parseInt(page || 1);
   const handleClickPrev = () => {
     if (page === undefined || page === 'undefined') {
       return;
     } else {
-      navigate(`/${typePage}/${genre || `q=${keyword}`}/page=${_page - 1}`);
+      const query = genre || `q=${keyword || 'all'}`;
+      navigate(`/${typePage}/${query}/page=${_page - 1}`);
     }
   };
+
   const handleClickNext = () => {
     if (page === undefined || page === 'undefined') {
       _page = 1;
     }
     const _nextPage = _page + 1;
-    navigate(`/${typePage}/${genre || `q=${keyword}`}/page=${_nextPage.toString()}`);
+    const query = genre || `q=${keyword || 'all'}`;
+    navigate(`/${typePage}/${query}/page=${_nextPage.toString()}`);
   };
 
   useEffect(() => {
     if (_page < 1 || _page > totalPages) {
       navigate(config.routes.notFound, { replace: true });
     }
+    console.log(totalPages);
   }, [_page, navigate, totalPages]);
 
   return (

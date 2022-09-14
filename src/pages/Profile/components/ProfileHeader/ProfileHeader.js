@@ -1,13 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera, faXmark, faGear } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as imageServices from '~/services/imageServices';
 import { getUserData, userSelector } from '~/store/reducers/userSlice';
 
 import styles from './ProfileHeader.module.scss';
+import ImageEditor from '../ImageEditor';
 const cx = classNames.bind(styles);
 
 function ProfileHeader() {
@@ -27,7 +28,7 @@ function ProfileHeader() {
       setUserData(user.data);
     }
   }, [user]);
-
+  const imgRef = useRef();
   return (
     <>
       <div className={cx('wrapper')}>
@@ -50,7 +51,6 @@ function ProfileHeader() {
               <button type="button" className={cx('avatar-button')}>
                 <FontAwesomeIcon icon={faCamera} className={cx('icon')} />
               </button>
-              {/* <input type="file" /> */}
             </>
           )}
         </div>
@@ -82,6 +82,7 @@ function ProfileHeader() {
           )}
         </div>
       </div>
+      {true && <ImageEditor ref={imgRef} />}
     </>
   );
 }
