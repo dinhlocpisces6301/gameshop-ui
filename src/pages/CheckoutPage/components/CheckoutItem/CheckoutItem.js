@@ -2,6 +2,7 @@
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import * as imageServices from '~/services/imageServices';
+import { currencyFormat } from '~/utils';
 
 import styles from './CheckoutItem.module.scss';
 
@@ -20,8 +21,8 @@ function CheckoutItem({ data }) {
             </h2>
           </div>
           <div className={cx('item-price')}>
-            {data.discount !== 0 && <span className={cx('origin-price')}>{data.price}</span>}
-            <span className={cx('price')}>{data.price * (1 - data.discount / 100)}</span>
+            {data.discount !== 0 && <span className={cx('origin-price')}>{currencyFormat(data.price)}</span>}
+            <span className={cx('price')}>{currencyFormat(data.price * (1 - data.discount / 100))}</span>
           </div>
         </div>
       </div>

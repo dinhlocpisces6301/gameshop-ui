@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 import Button from '~/components/Button';
 import config from '~/config';
-import styles from './WishListItem.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
 import { getCart, cartSelector } from '~/store/reducers/cartSlice';
@@ -12,10 +11,12 @@ import { getWishlist } from '~/store/reducers/wishlistSlice';
 import * as wishlistServices from '~/services/wishlistServices';
 import * as cartServices from '~/services/cartServices';
 import * as imageServices from '~/services/imageServices';
+import { currencyFormat } from '~/utils';
 
 import { useNotification } from '~/hooks';
 import ToastPortal from '~/components/ToastPortal';
 
+import styles from './WishListItem.module.scss';
 const cx = classNames.bind(styles);
 function WishListItem({ isAdded = false, data }) {
   const toastRef = useRef();
@@ -97,7 +98,7 @@ function WishListItem({ isAdded = false, data }) {
             </div>
           </div>
           <div className={cx('item-price')}>
-            <span className={cx('price')}>{data.price * (1 - data.discount / 100)}</span>
+            <span className={cx('price')}>{currencyFormat(data.price * (1 - data.discount / 100))}</span>
           </div>
           <div className={cx('action')}>
             {cartData.find((element) => element.gameId === data.gameID) === undefined ? (

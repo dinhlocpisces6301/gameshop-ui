@@ -8,9 +8,10 @@ import { useNotification } from '~/hooks';
 import { getCart } from '~/store/reducers/cartSlice';
 import * as cartServices from '~/services/cartServices';
 import * as imageServices from '~/services/imageServices';
+import ToastPortal from '~/components/ToastPortal';
 
 import styles from './CartItem.module.scss';
-import ToastPortal from '~/components/ToastPortal';
+import { currencyFormat } from '~/utils';
 const cx = classNames.bind(styles);
 function CartItem({ data }) {
   const [loading, setLoading] = useState(false);
@@ -51,7 +52,7 @@ function CartItem({ data }) {
             </h2>
           </div>
           <div className={cx('item-price')}>
-            <span className={cx('price')}>{data.price}</span>
+            <span className={cx('price')}>{currencyFormat(data.price)}</span>
             <span className={cx('remove')} onClick={handleClick}>
               {loading ? '' : 'Remove'}
             </span>

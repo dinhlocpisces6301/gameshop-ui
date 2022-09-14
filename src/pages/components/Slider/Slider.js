@@ -2,51 +2,24 @@
 import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 
-import styles from './Slider.module.scss';
 import SliderButton from './SliderButton';
 import { Link } from 'react-router-dom';
+import { currencyFormat } from '~/utils';
+import * as productServices from '~/services/productServices';
+import * as imageServices from '~/services/imageServices';
 
+import styles from './Slider.module.scss';
 const cx = classNames.bind(styles);
-
 export default function Slider() {
   const [slideIndex, setSlideIndex] = useState(1);
   const [slideValue, setSlideValue] = useState([]);
 
   useEffect(() => {
-    const dataSlider = [
-      {
-        id: 1,
-        name: 'Grand Theft Auto I',
-        category: ['Open World I', 'Multiplayer', 'Action'],
-        price: '227.000đ',
-      },
-      {
-        id: 2,
-        name: 'Grand Theft Auto II',
-        category: ['Open World II', 'Multiplayer', 'Action'],
-        price: '227.000đ',
-      },
-      {
-        id: 3,
-        name: 'Grand Theft Auto III',
-        category: ['Open World III', 'Multiplayer', 'Action'],
-        price: '227.000đ',
-      },
-      {
-        id: 4,
-        name: 'Grand Theft Auto IIII',
-        category: ['Open World IV', 'Multiplayer', 'Action'],
-        price: '227.000đ',
-      },
-      {
-        id: 5,
-        name: 'Grand Theft Auto V',
-        category: ['Open World V', 'Multiplayer', 'Action', 'Fighter'],
-        price: '227.000đ',
-      },
-    ];
-
-    setSlideValue(dataSlider);
+    const fetchApi = async () => {
+      const result = await productServices.getLatestProduct(1, 5);
+      setSlideValue(result.items);
+    };
+    fetchApi();
   }, []);
 
   useEffect(() => {
@@ -81,16 +54,16 @@ export default function Slider() {
     <div className={cx('container-slider')}>
       {slideValue.map((item, index) => {
         return (
-          <div className={slideIndex === index + 1 ? cx('slide', 'active-anim') : cx('slide')} key={item.id}>
+          <div className={slideIndex === index + 1 ? cx('slide', 'active-anim') : cx('slide')} key={item.gameID}>
             <Link to={`/product/${item.id}`}>
-              <img src={process.env.PUBLIC_URL + '/images/GTAV.jpg'} alt="" />
+              <img src={imageServices.getImage(item.listImage[0])} alt="" />
             </Link>
             <div className={cx('detail-wrapper')}>
               <Link to={`/product/${item.id}`} className={cx('detail-link')}>
                 <div className={cx('detail-content')}>
                   <div className={cx('title')}>{item.name}</div>
                   <div className={cx('category-items')}>
-                    {item.category.map((category, index) => {
+                    {item.genreName.map((category, index) => {
                       return (
                         <div key={index} className={cx('category-item')} href="/">
                           {category}
@@ -99,8 +72,12 @@ export default function Slider() {
                     })}
                   </div>
                   <div className={cx('discount-prices')}>
-                    <div className={cx('discount-orginal-price')}>500.000đ</div>
-                    <div className={cx('discount-final-price')}>{item.price}</div>
+                    {item.discount > 0 && (
+                      <div className={cx('discount-orginal-price')}>{currencyFormat(item.price)}</div>
+                    )}
+                    <div className={cx('discount-final-price')}>
+                      {currencyFormat(item.price * (1 - item.discount / 100))}
+                    </div>
                   </div>
                 </div>
               </Link>
@@ -112,7 +89,7 @@ export default function Slider() {
       <SliderButton moveSlide={prevSlide} direction={'prev'} />
 
       <div className={cx('container-dots')}>
-        {Array.from({ length: 5 }).map((item, index) => (
+        {Array.from({ length: slideValue.length }).map((item, index) => (
           <div
             key={index}
             onClick={() => moveDot(index + 1)}

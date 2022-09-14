@@ -13,6 +13,7 @@ import * as imageServices from '~/services/imageServices';
 import ToastPortal from '~/components/ToastPortal';
 import { useNotification } from '~/hooks';
 
+import { currencyFormat } from '~/utils';
 import config from '~/config';
 
 import styles from './ProductDetail.module.scss';
@@ -158,8 +159,8 @@ function ProductDetail({ data }) {
                 )}
               </div>
               <div className={cx('cart-section')}>
-                {value.discount !== 0 && <span className={cx('origin-price')}>{value.price}</span>}
-                <span className={cx('discount-price')}>{(value.price * (1 - value.discount / 100)).toString()}</span>
+                {value.discount !== 0 && <span className={cx('origin-price')}>{currencyFormat(value.price)}</span>}
+                <span className={cx('discount-price')}>{currencyFormat(value.price * (1 - value.discount / 100))}</span>
                 {cartData.find((element) => element.gameId === value.gameID) === undefined ? (
                   loading ? (
                     <div className={cx('loading')}>

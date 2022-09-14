@@ -10,6 +10,7 @@ import Category from '~/pages/Category';
 import Contact from '~/pages/Contact';
 import Profile from '~/pages/Profile';
 import Product from '~/pages/Product';
+import Products from '~/pages/Products';
 import Search from '~/pages/Search';
 import Login from '~/pages/Login';
 import SignUp from '~/pages/SignUp';
@@ -18,7 +19,6 @@ import CartPage from '~/pages/CartPage';
 import WishListPage from '~/pages/WishListPage';
 import AboutPage from '~/pages/AboutPage';
 import CheckoutPage from '~/pages/CheckoutPage';
-import Products from '~/pages/Products';
 
 // Public routes
 const publicRoutes = [
@@ -28,6 +28,7 @@ const publicRoutes = [
   { path: config.routes.contact, component: Contact, layout: HeaderOnly },
 
   { path: config.routes.product, component: Product, layout: HeaderOnly },
+
   { path: config.routes.products, component: Products, layout: HeaderOnly },
   { path: config.routes.allProduct, component: Products, layout: HeaderOnly },
   { path: config.routes.allProductWithDefaultPagination, component: Products, layout: HeaderOnly },

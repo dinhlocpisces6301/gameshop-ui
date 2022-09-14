@@ -26,14 +26,7 @@ export const uuid = () => {
   });
 };
 
-export function setCookie(name, value, days) {
-  var date, expires;
-  if (days) {
-    date = new Date();
-    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-    expires = '; expires=' + date.toGMTString();
-  } else {
-    expires = '';
-  }
-  document.cookie = name + '=' + value + ';secure ' + expires + '; path=/';
+export function currencyFormat(value) {
+  const formatter = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' });
+  return formatter.format(value);
 }

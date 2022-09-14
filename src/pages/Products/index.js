@@ -9,7 +9,7 @@ function Products() {
   return (
     <>
       <StoreNav />
-      <ProductList pagination={true} typePage={'products'} title={'All product'} />
+      <ProductList pagination={true} typePage={'products'} title={`${keyword || 'all'} product`} />
     </>
   );
 }

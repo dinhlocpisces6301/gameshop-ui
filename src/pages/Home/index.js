@@ -11,6 +11,7 @@ function Home() {
     <>
       <StoreNav />
       <Slider />
+      <ProductList type={'latest'} title={'Latest Product'} />
       <ProductList pagination={true} typePage={'products'} title={'All Product'} />
     </>
   );

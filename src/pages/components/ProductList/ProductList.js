@@ -12,7 +12,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import config from '~/config';
 const cx = classNames.bind(styles);
 
-function ProductList({ pagination = false, typePage = '', title = 'List Product' }) {
+function ProductList({ pagination = false, typePage = '', type = '', title = 'List Product' }) {
   const navigate = useNavigate();
 
   const { genre, keyword, page } = useParams();
@@ -25,6 +25,7 @@ function ProductList({ pagination = false, typePage = '', title = 'List Product'
 
   useEffect(() => {
     const fetchApi = async () => {
+      setIsLoaded(true);
       var result;
       switch (typePage) {
         case 'search': {
@@ -37,24 +38,28 @@ function ProductList({ pagination = false, typePage = '', title = 'List Product'
         }
         case 'products': {
           if (keyword === 'latest') {
-            result = await productServices.getAllProduct(page || 1);
+            result = await productServices.getLatestProduct(page || 1);
           } else {
             result = await productServices.getAllProduct(page || 1);
           }
           break;
         }
         default: {
-          return;
+          if (type === 'latest') {
+            result = await productServices.getLatestProduct(page || 1);
+          } else {
+            result = await productServices.getAllProduct(page || 1);
+          }
+          break;
         }
       }
-      setReviewValue(result.items[0]);
       setValue(result.items);
-      setIsLoaded(true);
+      setReviewValue(result.items[0]);
       setTotalPages(result.pageCount);
     };
 
     fetchApi();
-  }, [genre, keyword, page, typePage]);
+  }, [genre, keyword, page, typePage, type]);
 
   var _page = parseInt(page || 1);
   const handleClickPrev = () => {
@@ -79,7 +84,6 @@ function ProductList({ pagination = false, typePage = '', title = 'List Product'
     if (_page < 1 || _page > totalPages) {
       navigate(config.routes.notFound, { replace: true });
     }
-    console.log(totalPages);
   }, [_page, navigate, totalPages]);
 
   return (
@@ -88,7 +92,7 @@ function ProductList({ pagination = false, typePage = '', title = 'List Product'
         <h2>{title}</h2>
       </div>
       <div className={cx('container')}>
-        {value.length > 0 ? (
+        {value.length > 0 && isLoaded ? (
           <>
             <div className={cx('content')}>
               {value.map((item, index) => {
@@ -105,12 +109,17 @@ function ProductList({ pagination = false, typePage = '', title = 'List Product'
                 );
               })}
             </div>
-            <div className={cx('review')}>{isLoaded && <ProductReview data={reviewValue} />}</div>
+            <div className={cx('review')}>
+              <ProductReview data={reviewValue} />
+            </div>
           </>
         ) : (
-          <div className={cx('not-found')}>
-            <span>no result(s) found</span>
-          </div>
+          isLoaded && (
+            <div className={cx('not-found')}>
+              <h2>no result(s) found</h2>
+              <span className={cx('loading')}></span>
+            </div>
+          )
         )}
       </div>
       <div className={cx('footer')}>

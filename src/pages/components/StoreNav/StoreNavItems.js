@@ -16,11 +16,11 @@ export const storeNavItems = [
         title: 'Community Recommends',
         path: '/',
       },
-      {
-        id: 3,
-        title: 'Recently Viewed',
-        path: '/',
-      },
+      // {
+      //   id: 3,
+      //   title: 'Recently Viewed',
+      //   path: '/',
+      // },
     ],
   },
   {
@@ -46,11 +46,6 @@ export const storeNavItems = [
       {
         id: 4,
         title: 'Recently Updated',
-        path: '/',
-      },
-      {
-        id: 5,
-        title: 'Popular Upcoming',
         path: '/',
       },
     ],

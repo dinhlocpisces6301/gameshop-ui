@@ -2,6 +2,7 @@
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import * as imageServices from '~/services/imageServices';
+import { currencyFormat } from '~/utils';
 
 import styles from './ProductItem.module.scss';
 
@@ -18,7 +19,7 @@ function ProductItem({ data }) {
             Release date: <strong>14/04/2015</strong>
           </div>
           <div className={cx('money')}>
-            Origin Price: <strong>{data.price}</strong>
+            Origin Price: <strong>{currencyFormat(data.price)}</strong>
           </div>
           {data.discount > 0 && (
             <div className={cx('money')}>

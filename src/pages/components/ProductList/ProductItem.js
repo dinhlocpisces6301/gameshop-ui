@@ -3,9 +3,10 @@ import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 // import { useState } from 'react';
 import * as imageServices from '~/services/imageServices';
-import styles from './ProductList.module.scss';
+import { currencyFormat } from '~/utils';
 // import config from '~/config';
 
+import styles from './ProductList.module.scss';
 const cx = classNames.bind(styles);
 
 function ProductItem({ data, isActive }) {
@@ -20,8 +21,8 @@ function ProductItem({ data, isActive }) {
               <div className={cx('item-category')}>{data.genreName.join(', ')}</div>
             </div>
             <div className={cx('discount-prices')}>
-              {data.discount > 0 && <div className={cx('discount-orginal-price')}>{data.price}</div>}
-              <div className={cx('discount-final-price')}>{data.price * (1 - data.discount / 100)}</div>
+              {data.discount > 0 && <div className={cx('discount-orginal-price')}>{currencyFormat(data.price)}</div>}
+              <div className={cx('discount-final-price')}>{currencyFormat(data.price * (1 - data.discount / 100))}</div>
             </div>
           </div>
         </Link>

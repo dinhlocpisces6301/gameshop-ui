@@ -44,3 +44,12 @@ export const getProductById = async (id) => {
     console.log(error);
   }
 };
+
+export const getLatestProduct = async (page, size = 10) => {
+  try {
+    const res = await httpRequest.get(`games/latest?pageindex=${page}&pagesize=${size}`);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
