@@ -46,13 +46,10 @@ const ImageEditor = forwardRef(({ typeImage }, ref) => {
       image && URL.revokeObjectURL(image.url);
     };
   }, [image]);
-
   const toastRef = useRef();
   const Notify = useNotification(toastRef);
   const dispatch = useDispatch();
-
   const changeImage = async () => {
-    console.log(typeImage);
     var response;
     if (typeImage === 'avatar') {
       response = await userServices.changeAvatar(image);
@@ -79,30 +76,42 @@ const ImageEditor = forwardRef(({ typeImage }, ref) => {
   const handleChangeImage = (e) => {
     changeImage();
   };
-  return show ? (
-    <>
-      <div className={cx('wrapper')}>
-        <div className={cx('header')}>
-          <button onClick={() => setShow(false)} className={cx('button-close')}>
-            <FontAwesomeIcon icon={faXmark} className={cx('icon')} />
-          </button>
-        </div>
-        <div className={cx('container')}>
-          {typeImage === 'avatar' && <img src={image.preview} alt="" className={cx('avatar-review')} />}
-          {typeImage === 'wallpaper' && <img src={image.preview} alt="" className={cx('wallpaper-review')} />}
-          <input type="file" className={cx('upload-input')} onChange={handleChangeFile} />
-          <div className={cx('action')}>
-            <button className={cx('button-cancel')}>Cancel</button>
-            <button className={cx('button-confirm')} onClick={handleChangeImage}>
-              Change
+  const handleClose = () => {
+    setShow(false);
+    if (typeImage === 'avatar') {
+      setImage({ preview: imageServices.getImage(userData.avatarPath) });
+    }
+    if (typeImage === 'wallpaper') {
+      setImage({ preview: imageServices.getImage(userData.thumbnailPath) });
+    }
+  };
+  return (
+    show && (
+      <>
+        <div className={cx('wrapper')}>
+          <div className={cx('header')}>
+            <h2 className={cx('title')}>{`Change ${typeImage}`}</h2>
+            <button className={cx('button-close')} onClick={handleClose}>
+              <FontAwesomeIcon icon={faXmark} className={cx('icon')} />
             </button>
           </div>
+          <div className={cx('container')}>
+            {typeImage === 'avatar' && <img src={image.preview} alt="" className={cx('avatar-review')} />}
+            {typeImage === 'wallpaper' && <img src={image.preview} alt="" className={cx('wallpaper-review')} />}
+            <div className={cx('action')}>
+              <input type="file" className={cx('upload-input')} onChange={handleChangeFile} />
+              <button className={cx('button-confirm')} onClick={handleChangeImage}>
+                Apply Change
+              </button>
+              <button className={cx('button-cancel')} onClick={handleClose}>
+                Cancel
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-      <ToastPortal ref={toastRef} autoClose={true} />
-    </>
-  ) : (
-    <></>
+        <ToastPortal ref={toastRef} autoClose={true} />
+      </>
+    )
   );
 });
 

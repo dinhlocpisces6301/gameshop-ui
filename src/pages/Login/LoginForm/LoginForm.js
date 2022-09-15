@@ -40,8 +40,8 @@ function LoginForm() {
     }
 
     if (response.isSuccess === true) {
-      Cookies.set('jwt', response.resultObj.token, { expires: 3, secure: true });
-      Cookies.set('user-id', response.resultObj.userId, { expires: 3, secure: true });
+      Cookies.set('jwt', response.resultObj.token, { expires: 30 / 1440, secure: true });
+      Cookies.set('user-id', response.resultObj.userId, { expires: 30 / 1440, secure: true });
       Notify('success', 'Login Successfully');
       const timerId = setTimeout(() => {
         clearTimeout(timerId);
