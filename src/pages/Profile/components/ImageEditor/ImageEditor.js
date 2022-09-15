@@ -10,7 +10,7 @@ import * as imageServices from '~/services/imageServices';
 import * as userServices from '~/services/userServices';
 
 import styles from './ImageEditor.module.scss';
-import { useNotification } from '~/hooks';
+import { useClickOutside, useNotification } from '~/hooks';
 import ToastPortal from '~/components/ToastPortal';
 const cx = classNames.bind(styles);
 const ImageEditor = forwardRef(({ typeImage }, ref) => {
@@ -49,7 +49,9 @@ const ImageEditor = forwardRef(({ typeImage }, ref) => {
   const toastRef = useRef();
   const Notify = useNotification(toastRef);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const changeImage = async () => {
+    setLoading(true);
     var response;
     if (typeImage === 'avatar') {
       response = await userServices.changeAvatar(image);
@@ -63,6 +65,7 @@ const ImageEditor = forwardRef(({ typeImage }, ref) => {
       const timerId = setTimeout(() => {
         clearTimeout(timerId);
         dispatch(getUserData());
+        setLoading(false);
         setShow(false);
       }, 3000);
     }
@@ -70,6 +73,7 @@ const ImageEditor = forwardRef(({ typeImage }, ref) => {
       Notify('error', response.message);
       const timerId = setTimeout(() => {
         clearTimeout(timerId);
+        setLoading(false);
       }, 3000);
     }
   };
@@ -85,10 +89,13 @@ const ImageEditor = forwardRef(({ typeImage }, ref) => {
       setImage({ preview: imageServices.getImage(userData.thumbnailPath) });
     }
   };
+  const formRef = useRef();
+  useClickOutside(formRef, handleClose);
+
   return (
     show && (
       <>
-        <div className={cx('wrapper')}>
+        <div className={cx('wrapper')} ref={formRef}>
           <div className={cx('header')}>
             <h2 className={cx('title')}>{`Change ${typeImage}`}</h2>
             <button className={cx('button-close')} onClick={handleClose}>
@@ -100,12 +107,24 @@ const ImageEditor = forwardRef(({ typeImage }, ref) => {
             {typeImage === 'wallpaper' && <img src={image.preview} alt="" className={cx('wallpaper-review')} />}
             <div className={cx('action')}>
               <input type="file" className={cx('upload-input')} onChange={handleChangeFile} />
-              <button className={cx('button-confirm')} onClick={handleChangeImage}>
-                Apply Change
-              </button>
-              <button className={cx('button-cancel')} onClick={handleClose}>
-                Cancel
-              </button>
+              {loading ? (
+                <div className={cx('loading', 'confirm')}>
+                  <span></span>
+                </div>
+              ) : (
+                <button className={cx('button-confirm')} onClick={handleChangeImage}>
+                  Apply Change
+                </button>
+              )}
+              {loading ? (
+                <div className={cx('loading', 'cancel')}>
+                  <span></span>
+                </div>
+              ) : (
+                <button className={cx('button-cancel')} onClick={handleClose}>
+                  Cancel
+                </button>
+              )}
             </div>
           </div>
         </div>
