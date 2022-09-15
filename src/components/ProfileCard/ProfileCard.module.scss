@@ -63,8 +63,9 @@
   user-select: none;
 
   img {
-    height: calc(60%);
-    width: calc(60%);
+    height: 60%;
+    width: 60%;
+    object-fit: scale-down;
   }
 }
 

@@ -29,6 +29,15 @@ function ProfileHeader() {
     }
   }, [user]);
   const imgRef = useRef();
+  const [typeImage, setTypeImage] = useState();
+  const handleChangeAvatar = () => {
+    imgRef.current.show();
+    setTypeImage('avatar');
+  };
+  const handleChangeWallPaper = () => {
+    imgRef.current.show();
+    setTypeImage('wallpaper');
+  };
   return (
     <>
       <div className={cx('wrapper')}>
@@ -36,10 +45,9 @@ function ProfileHeader() {
           <img alt="wallpaper" src={imageServices.getImage(userData.thumbnailPath)} className={cx('wallpaper-img')} />
           {editState && (
             <>
-              <button type="button" className={cx('wallpaper-button')}>
+              <button type="button" className={cx('wallpaper-button')} onClick={handleChangeWallPaper}>
                 <FontAwesomeIcon icon={faCamera} className={cx('icon')} />
                 Edit Wallpaper
-                <input type="file" />
               </button>
             </>
           )}
@@ -48,7 +56,7 @@ function ProfileHeader() {
           <img alt="avatar" src={imageServices.getImage(userData.avatarPath)} className={cx('avatar-img')} />
           {editState && (
             <>
-              <button type="button" className={cx('avatar-button')}>
+              <button type="button" className={cx('avatar-button')} onClick={handleChangeAvatar}>
                 <FontAwesomeIcon icon={faCamera} className={cx('icon')} />
               </button>
             </>
@@ -82,7 +90,7 @@ function ProfileHeader() {
           )}
         </div>
       </div>
-      {true && <ImageEditor ref={imgRef} />}
+      <ImageEditor typeImage={typeImage} ref={imgRef} />
     </>
   );
 }

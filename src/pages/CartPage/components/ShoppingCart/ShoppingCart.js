@@ -7,6 +7,7 @@ import { getCart, cartSelector } from '~/store/reducers/cartSlice';
 import CartItem from '../CartItem';
 import Button from '~/components/Button';
 import config from '~/config';
+import { currencyFormat } from '~/utils';
 
 import styles from './ShoppingCart.module.scss';
 const cx = classNames.bind(styles);
@@ -30,7 +31,7 @@ function ShoppingCart() {
           <div className={cx('cart-container')}>
             {cartData.length > 0 ? (
               cartData.map((item, index) => {
-                return <CartItem key={item.gameId} data={item} />;
+                return <CartItem data={item} key={item.gameId} />;
               })
             ) : (
               <div className={cx('empty-cart')}>
@@ -43,15 +44,20 @@ function ShoppingCart() {
           </div>
           <div className={cx('cart-total-container')}>
             <div className={cx('total-price')}>
-              Total: {cartData.reduce((total, current) => total + current.price, 0)}
+              {`Total: ${currencyFormat(cartData.reduce((total, current) => total + current.price, 0))}`}
             </div>
             <div className={cx('discount')}>
-              Discount: {cartData.reduce((total, current) => total + (current.price * current.discount) / 100, 0)}
+              {`Discount:
+              ${currencyFormat(
+                cartData.reduce((total, current) => total + (current.price * current.discount) / 100, 0),
+              )}`}
             </div>
             <hr />
             <div className={cx('final-price')}>
-              Estimated total:{' '}
-              {cartData.reduce((total, current) => total + current.price * (1 - current.discount / 100), 0)}
+              {`Estimated total: 
+              ${currencyFormat(
+                cartData.reduce((total, current) => total + current.price * (1 - current.discount / 100), 0),
+              )}`}
             </div>
             <div className={cx('action')}>
               <Button to={config.routes.home} className={cx('shopping-button')}>

@@ -55,11 +55,11 @@ export default function Slider() {
       {slideValue.map((item, index) => {
         return (
           <div className={slideIndex === index + 1 ? cx('slide', 'active-anim') : cx('slide')} key={item.gameID}>
-            <Link to={`/product/${item.id}`}>
+            <Link to={`/product/${item.gameID}`}>
               <img src={imageServices.getImage(item.listImage[0])} alt="" />
             </Link>
             <div className={cx('detail-wrapper')}>
-              <Link to={`/product/${item.id}`} className={cx('detail-link')}>
+              <Link to={`/product/${item.gameId}`} className={cx('detail-link')}>
                 <div className={cx('detail-content')}>
                   <div className={cx('title')}>{item.name}</div>
                   <div className={cx('category-items')}>

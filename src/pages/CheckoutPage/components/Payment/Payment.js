@@ -8,11 +8,12 @@ import ToastPortal from '~/components/ToastPortal';
 import Button from '~/components/Button';
 import PaymentItem from '../CheckoutItem';
 import config from '~/config';
-import styles from './Payment.module.scss';
 import * as checkoutServices from '~/services/checkoutServices';
 import { getCart, cartSelector } from '~/store/reducers/cartSlice';
 import { useNotification } from '~/hooks';
+import { currencyFormat } from '~/utils';
 
+import styles from './Payment.module.scss';
 const cx = classNames.bind(styles);
 function Payment() {
   const toastRef = useRef();
@@ -68,25 +69,32 @@ function Payment() {
               <></>
             ) : (
               cartData.map((item) => {
-                return <PaymentItem data={item} />;
+                return <PaymentItem data={item} key={item.gameId} />;
               })
             )}
           </div>
           <div className={cx('payment-total-container')}>
             <div className={cx('total-price')}>
-              Total price: {cartData.reduce((total, current) => total + current.price, 0)}
+              {`Total price: ${currencyFormat(cartData.reduce((total, current) => total + current.price, 0))}`}
             </div>
             <div className={cx('discount')}>
-              Total discount: -
-              {cartData.reduce((total, current) => total + (current.price * current.discount) / 100, 0)}
+              {`Total discount: - 
+              ${currencyFormat(
+                cartData.reduce((total, current) => total + (current.price * current.discount) / 100, 0),
+              )}`}
             </div>
-            <div className={cx('vat')}>VAT: +0đ</div>
+            <div className={cx('vat')}>{`VAT: + ${currencyFormat(0)}`}</div>
             <hr />
             <div className={cx('final-price')}>
-              Amount: {cartData.reduce((total, current) => total + current.price * (1 - current.discount / 100), 0)}
+              {`Amount: ${currencyFormat(
+                cartData.reduce((total, current) => total + current.price * (1 - current.discount / 100), 0),
+              )}`}
             </div>
             <div className={cx('discount')}>
-              Saved: {cartData.reduce((total, current) => total + (current.price * current.discount) / 100, 0)}
+              {`Saved: 
+              ${currencyFormat(
+                cartData.reduce((total, current) => total + (current.price * current.discount) / 100, 0),
+              )}`}
             </div>
             <div className={cx('action')}>
               <Button className={cx('cancel-button')} onClick={handleCancelClick} disabled={loading}>
