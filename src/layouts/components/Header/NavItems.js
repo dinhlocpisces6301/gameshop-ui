@@ -7,7 +7,7 @@ export const navItems = [
     subnav: [
       {
         id: 1,
-        title: 'Best Sellers',
+        title: 'Best Seller',
         path: config.routes.home,
       },
       {

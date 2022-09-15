@@ -30,24 +30,24 @@ export const storeNavItems = [
     subnav: [
       {
         id: 1,
-        title: 'Top Sellers',
-        path: '/',
+        title: 'Best Seller',
+        path: `/products/q=best-seller`,
       },
       {
         id: 2,
         title: 'New & Trending',
-        path: '/',
+        path: `/products/q=latest`,
       },
       {
         id: 3,
         title: 'Current Specials',
         path: '/',
       },
-      {
-        id: 4,
-        title: 'Recently Updated',
-        path: '/',
-      },
+      // {
+      //   id: 4,
+      //   title: 'Recently Updated',
+      //   path: '/',
+      // },
     ],
   },
   {

@@ -2,7 +2,7 @@
 import classNames from 'classnames/bind';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserData, userSelector } from '~/store/reducers/userSlice';
@@ -24,7 +24,7 @@ const ImageEditor = forwardRef(({ typeImage }, ref) => {
 
   const user = useSelector(userSelector);
   const [userData, setUserData] = useState({ preview: process.env.PUBLIC_URL + '/images/avatar-placeholder.jpg' });
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (user.data !== undefined) {
       setUserData(user.data);
       if (typeImage === 'avatar') {

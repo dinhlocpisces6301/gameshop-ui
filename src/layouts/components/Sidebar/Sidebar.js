@@ -26,8 +26,8 @@ function Sidebar() {
       </div> */}
       <div className={cx('container')}>
         <span>BROWSE TAG</span>
-        <Link to={config.routes.home}>Top Sellers</Link>
-        <Link to={config.routes.products}>New Releases</Link>
+        <Link to={`/products/q=best-seller`}>Best Seller</Link>
+        <Link to={`/products/q=latest`}>New Releases</Link>
         <Link to={config.routes.home}>Specials</Link>
       </div>
       <div className={cx('container')}>

@@ -39,6 +39,8 @@ function ProductList({ pagination = false, typePage = '', type = '', title = 'Li
         case 'products': {
           if (keyword === 'latest') {
             result = await productServices.getLatestProduct(page || 1);
+          } else if (keyword === 'best-seller') {
+            result = await productServices.getTopBestProduct(page || 1);
           } else {
             result = await productServices.getAllProduct(page || 1);
           }
@@ -47,6 +49,8 @@ function ProductList({ pagination = false, typePage = '', type = '', title = 'Li
         default: {
           if (type === 'latest') {
             result = await productServices.getLatestProduct(page || 1);
+          } else if (type === 'bestSeller') {
+            result = await productServices.getTopBestProduct(page || 1);
           } else {
             result = await productServices.getAllProduct(page || 1);
           }
