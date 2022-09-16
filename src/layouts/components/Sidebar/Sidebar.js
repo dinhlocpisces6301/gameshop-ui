@@ -28,6 +28,7 @@ function Sidebar() {
         <Link to={`/products/q=best-seller`}>Best Seller</Link>
         <Link to={`/products/q=latest`}>New Releases</Link>
         <Link to={`/products/q=specials`}>Specials</Link>
+        <Link to={`/products`}>All Products</Link>
       </div>
       <div className={cx('container')}>
         <span>BROWSE BY GENRE</span>

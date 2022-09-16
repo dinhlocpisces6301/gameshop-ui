@@ -8,14 +8,21 @@ function Products() {
   const { keyword } = useParams();
   const [title, setTitle] = useState('');
   useEffect(() => {
-    const tmp = keyword.split('-');
-    setTitle(tmp.join(' '));
+    if (keyword !== undefined) {
+      const tmp = keyword.split('-');
+      const _title = tmp.join(' ');
+      if (_title === 'best seller' || _title === 'specials' || _title === 'latest') {
+        setTitle(_title);
+      } else {
+        setTitle('all');
+      }
+    }
   }, [keyword]);
 
   return (
     <>
       <StoreNav />
-      <ProductList pagination={true} typePage={'products'} title={`${title || 'all'} product`} />
+      <ProductList pagination={true} typePage={'products'} title={`${'all' || title} products`} />
     </>
   );
 }

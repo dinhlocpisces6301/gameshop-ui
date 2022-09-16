@@ -42,3 +42,17 @@
     object-fit: cover;
   }
 }
+
+.action {
+  width: 8rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  a {
+    svg {
+      color: var(--white);
+      font-size: 2.5rem;
+    }
+  }
+}
