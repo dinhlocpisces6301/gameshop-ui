@@ -41,7 +41,7 @@ export const storeNavItems = [
       {
         id: 3,
         title: 'Current Specials',
-        path: '/',
+        path: `/products/q=special`,
       },
       // {
       //   id: 4,

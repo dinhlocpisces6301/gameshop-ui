@@ -12,7 +12,8 @@ function Home() {
       <StoreNav />
       <Slider />
       <ProductList type={'latest'} title={'Latest Product'} />
-      <ProductList type={'bestSeller'} title={'Best Seller'} />
+      <ProductList type={'specials'} title={'Sales Now'} />
+      <ProductList type={'best-seller'} title={'Best Seller'} />
       <ProductList pagination={true} typePage={'products'} title={'All Product'} />
     </>
   );

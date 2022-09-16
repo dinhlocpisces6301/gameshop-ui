@@ -1,22 +1,21 @@
 // import PropTypes from 'prop-types';
+import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
-import classNames from 'classnames/bind';
-import styles from './ProductList.module.scss';
+import { useNavigate, useParams } from 'react-router-dom';
 
+import config from '~/config';
 import ProductItem from './ProductItem';
 import ProductReview from './ProductReview';
 import * as productServices from '~/services/productServices';
-import { useNavigate, useParams } from 'react-router-dom';
-import config from '~/config';
-const cx = classNames.bind(styles);
 
+import styles from './ProductList.module.scss';
+const cx = classNames.bind(styles);
 function ProductList({ pagination = false, typePage = '', type = '', title = 'List Product' }) {
   const navigate = useNavigate();
 
   const { genre, keyword, page } = useParams();
-  // console.log({ _genre: genre, _keyword: keyword, _page: page });
   const [reviewIndex, setReviewIndex] = useState(0);
   const [reviewValue, setReviewValue] = useState({});
   const [value, setValue] = useState([]);
@@ -37,22 +36,44 @@ function ProductList({ pagination = false, typePage = '', type = '', title = 'Li
           break;
         }
         case 'products': {
-          if (keyword === 'latest') {
-            result = await productServices.getLatestProduct(page || 1);
-          } else if (keyword === 'best-seller') {
-            result = await productServices.getTopBestProduct(page || 1);
-          } else {
-            result = await productServices.getAllProduct(page || 1);
+          switch (keyword) {
+            case 'latest': {
+              result = await productServices.getLatestProduct(page || 1);
+              break;
+            }
+            case 'best-seller': {
+              result = await productServices.getBestSellerProduct(page || 1);
+              break;
+            }
+            case 'specials': {
+              result = await productServices.getSalesProduct(page || 1);
+              break;
+            }
+            default: {
+              result = await productServices.getAllProduct(page || 1);
+              break;
+            }
           }
           break;
         }
         default: {
-          if (type === 'latest') {
-            result = await productServices.getLatestProduct(page || 1);
-          } else if (type === 'bestSeller') {
-            result = await productServices.getTopBestProduct(page || 1);
-          } else {
-            result = await productServices.getAllProduct(page || 1);
+          switch (type) {
+            case 'latest': {
+              result = await productServices.getLatestProduct(page || 1);
+              break;
+            }
+            case 'best-seller': {
+              result = await productServices.getBestSellerProduct(page || 1);
+              break;
+            }
+            case 'specials': {
+              result = await productServices.getSalesProduct(page || 1);
+              break;
+            }
+            default: {
+              result = await productServices.getAllProduct(page || 1);
+              break;
+            }
           }
           break;
         }

@@ -2,8 +2,13 @@ import { take, fork, call, put } from 'redux-saga/effects';
 
 import { getCheckout, getCheckoutSuccess } from '../reducers/checkoutSlice';
 import * as checkoutServices from '~/services/checkoutServices';
+import * as authServices from '~/services/authServices';
 
 function* handleGetCheckoutData() {
+  const islogged = authServices.isLoggedIn();
+  if (!islogged) {
+    return;
+  }
   const result = yield call(checkoutServices.getCheckout);
   yield put(getCheckoutSuccess(result));
 }

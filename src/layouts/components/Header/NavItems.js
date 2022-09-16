@@ -8,17 +8,17 @@ export const navItems = [
       {
         id: 1,
         title: 'Best Seller',
-        path: config.routes.home,
+        path: `/products/q=best-seller`,
       },
       {
         id: 2,
         title: 'Lastest',
-        path: config.routes.home,
+        path: `/products/q=latest`,
       },
       {
         id: 3,
-        title: 'News',
-        path: config.routes.home,
+        title: 'Specials',
+        path: `/products/q=special`,
       },
     ],
   },

@@ -54,9 +54,18 @@ export const getLatestProduct = async (page, size = 10) => {
   }
 };
 
-export const getTopBestProduct = async (page, size = 10) => {
+export const getBestSellerProduct = async (page, size = 10) => {
   try {
     const res = await httpRequest.get(`games/bestseller?pageindex=${page}&pagesize=${size}`);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getSalesProduct = async (page, size = 10) => {
+  try {
+    const res = await httpRequest.get(`games/getgamesale?pageindex=${page}&pagesize=${size}`);
     return res;
   } catch (error) {
     console.log(error);

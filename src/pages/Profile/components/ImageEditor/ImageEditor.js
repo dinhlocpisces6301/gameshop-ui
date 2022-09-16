@@ -81,12 +81,14 @@ const ImageEditor = forwardRef(({ typeImage }, ref) => {
     changeImage();
   };
   const handleClose = () => {
-    setShow(false);
-    if (typeImage === 'avatar') {
-      setImage({ preview: imageServices.getImage(userData.avatarPath) });
-    }
-    if (typeImage === 'wallpaper') {
-      setImage({ preview: imageServices.getImage(userData.thumbnailPath) });
+    if (!loading) {
+      setShow(false);
+      if (typeImage === 'avatar') {
+        setImage({ preview: imageServices.getImage(userData.avatarPath) });
+      }
+      if (typeImage === 'wallpaper') {
+        setImage({ preview: imageServices.getImage(userData.thumbnailPath) });
+      }
     }
   };
   const formRef = useRef();
