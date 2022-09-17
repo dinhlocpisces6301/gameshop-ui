@@ -39,7 +39,7 @@
   img {
     height: calc(var(--size-item) - 1rem);
     width: calc(var(--size-item) * 1.5);
-    object-fit: cover;
+    object-fit: contain;
   }
 }
 
