@@ -9,6 +9,7 @@ import { getWishlist, wishlistSelector } from '~/store/reducers/wishlistSlice';
 import * as cartServices from '~/services/cartServices';
 import * as wishlistServices from '~/services/wishlistServices';
 import * as imageServices from '~/services/imageServices';
+import * as authServices from '~/services/authServices';
 
 import ToastPortal from '~/components/ToastPortal';
 import { useNotification } from '~/hooks';
@@ -86,6 +87,7 @@ function ProductDetail({ data }) {
     setWishListData(wishlist.data || []);
   }, [wishlist]);
 
+  const isLoggedIn = authServices.isLoggedIn();
   return (
     <>
       <div className={cx('wrapper')}>
@@ -104,7 +106,7 @@ function ProductDetail({ data }) {
                   />
                   <h2 className={cx('product-name')}>{value.name}</h2>
                   <div className={cx('product-description')}>{value.description}</div>
-                  <div className={cx('product-release-date')}>
+                  {/* <div className={cx('product-release-date')}>
                     <div className={cx('title')}>RELEASE DATE:</div>
                     <div className={cx('date')}>{new Date(value.createdDate).toLocaleDateString(undefined)}</div>
                   </div>
@@ -119,7 +121,7 @@ function ProductDetail({ data }) {
                     <Link to="#" className={cx('link')}>
                       Rockstar Games
                     </Link>
-                  </div>
+                  </div> */}
                   <div className={cx('product-category')}>
                     <div className={cx('title')}>CATEGORY:</div>
                     <div className={cx('category-wrapper')}>
@@ -140,44 +142,50 @@ function ProductDetail({ data }) {
                 </div>
               </div>
             </div>
-            <div className={cx('action-container')}>
-              <div className={cx('wishlist-section')}>
-                {wishlistData.find((element) => element.gameID === value.gameID) === undefined ? (
-                  loading2 ? (
-                    <div className={cx('loading-2')}>
-                      <span></span>
-                    </div>
+            {isLoggedIn ? (
+              <div className={cx('action-container')}>
+                <div className={cx('wishlist-section')}>
+                  {wishlistData.find((element) => element.gameID === value.gameID) === undefined ? (
+                    loading2 ? (
+                      <div className={cx('loading-2')}>
+                        <span></span>
+                      </div>
+                    ) : (
+                      <button className={cx('wishlish-button')} onClick={handleAddToWishlist}>
+                        Add to your WishList
+                      </button>
+                    )
                   ) : (
-                    <button className={cx('wishlish-button')} onClick={handleAddToWishlist}>
-                      Add to your WishList
-                    </button>
-                  )
-                ) : (
-                  <Link to={config.routes.wishlist} className={cx('view-wishlist-button')}>
-                    View WishList
-                  </Link>
-                )}
-              </div>
-              <div className={cx('cart-section')}>
-                {value.discount !== 0 && <span className={cx('origin-price')}>{currencyFormat(value.price)}</span>}
-                <span className={cx('discount-price')}>{currencyFormat(value.price * (1 - value.discount / 100))}</span>
-                {cartData.find((element) => element.gameId === value.gameID) === undefined ? (
-                  loading ? (
-                    <div className={cx('loading')}>
-                      <span></span>
-                    </div>
+                    <Link to={config.routes.wishlist} className={cx('view-wishlist-button')}>
+                      View WishList
+                    </Link>
+                  )}
+                </div>
+                <div className={cx('cart-section')}>
+                  {value.discount !== 0 && <span className={cx('origin-price')}>{currencyFormat(value.price)}</span>}
+                  <span className={cx('discount-price')}>
+                    {currencyFormat(value.price * (1 - value.discount / 100))}
+                  </span>
+                  {cartData.find((element) => element.gameId === value.gameID) === undefined ? (
+                    loading ? (
+                      <div className={cx('loading')}>
+                        <span></span>
+                      </div>
+                    ) : (
+                      <button className={cx('cart-button')} onClick={handleClick}>
+                        Add to Cart
+                      </button>
+                    )
                   ) : (
-                    <button className={cx('cart-button')} onClick={handleClick}>
-                      Add to Cart
-                    </button>
-                  )
-                ) : (
-                  <Link to={config.routes.cart} className={cx('view-cart-button')}>
-                    View Cart
-                  </Link>
-                )}
+                    <Link to={config.routes.cart} className={cx('view-cart-button')}>
+                      View Cart
+                    </Link>
+                  )}
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className={cx('action-container')}></div>
+            )}
           </>
         ) : (
           <>

@@ -5,8 +5,8 @@ import * as checkoutServices from '~/services/checkoutServices';
 import * as authServices from '~/services/authServices';
 
 function* handleGetCheckoutData() {
-  const islogged = authServices.isLoggedIn();
-  if (!islogged) {
+  const isLoggedIn = authServices.isLoggedIn();
+  if (!isLoggedIn) {
     return;
   }
   const result = yield call(checkoutServices.getCheckout);

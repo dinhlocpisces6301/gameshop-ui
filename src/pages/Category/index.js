@@ -14,7 +14,7 @@ function Category() {
   useEffect(() => {
     const fetchApi = async () => {
       const result = await categoryServices.getCategoryById(genre);
-      setTitle(`Page ${page || 1} - Genre: ${result.name}`);
+      setTitle(`Genre: ${result.name} - Page ${page || 1}`);
     };
 
     if (genre !== undefined && genre !== 'undefined') {

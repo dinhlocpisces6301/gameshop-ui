@@ -5,8 +5,8 @@ import * as wishlistServices from '~/services/wishlistServices';
 import * as authServices from '~/services/authServices';
 
 function* handleGetWishlistData() {
-  const islogged = authServices.isLoggedIn();
-  if (!islogged) {
+  const isLoggedIn = authServices.isLoggedIn();
+  if (!isLoggedIn) {
     return;
   }
 

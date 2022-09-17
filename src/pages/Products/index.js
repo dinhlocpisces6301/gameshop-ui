@@ -5,7 +5,7 @@ import StoreNav from '../components/StoreNav';
 
 function Products() {
   document.title = 'All product';
-  const { keyword } = useParams();
+  const { keyword, page } = useParams();
   const [title, setTitle] = useState('');
   useEffect(() => {
     if (keyword !== undefined) {
@@ -22,7 +22,7 @@ function Products() {
   return (
     <>
       <StoreNav />
-      <ProductList pagination={true} typePage={'products'} title={`${'all' || title} products`} />
+      <ProductList pagination={true} typePage={'products'} title={`${title || 'all'} products - Page ${page || 1}`} />
     </>
   );
 }

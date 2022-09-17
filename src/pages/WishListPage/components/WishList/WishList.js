@@ -23,7 +23,7 @@ function WishList() {
   return (
     <>
       <div className={cx('wrapper')}>
-        <h2 className={cx('title')}>Your WishList (5)</h2>
+        <h2 className={cx('title')}>Your WishList ({wishlistData.length})</h2>
         <div className={cx('content')}>
           <div className={cx('wishlist-container')}>
             {wishlistData.length > 0 ? (
