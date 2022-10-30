@@ -16,7 +16,7 @@ export default function Slider() {
 
   useEffect(() => {
     const fetchApi = async () => {
-      const result = await productServices.getLatestProduct(1, 5);
+      const result = await productServices.getLatestProduct(1, 10);
       setSlideValue(result.items);
     };
     fetchApi();
